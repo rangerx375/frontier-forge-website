@@ -54,12 +54,18 @@ app.post('/book', async (req, res) => {
     );
 
     const clientId = clientRes.data.clientId || clientRes.data.data?.clientId || clientRes.data.id;
+    console.log('Client created:', clientId);
+
+    if (!clientId) {
+      return res.json({ success: false, error: 'Client created but no ID returned', debug: clientRes.data });
+    }
 
     // Book appointment
     const bookingData = new URLSearchParams({
       ServiceId: service,
       StartTime: datetime || new Date(Date.now() + 86400000).toISOString().slice(0,19) + '-08:00',
-      ClientId: clientId
+      ClientId: clientId,
+      ClientGender: 2035
     });
 
     if (stylist) bookingData.append('EmployeeId', stylist);
