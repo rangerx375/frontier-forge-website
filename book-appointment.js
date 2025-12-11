@@ -53,7 +53,7 @@ app.post('/book', async (req, res) => {
       { headers: { Authorization: `Bearer ${authToken}` }}
     );
 
-    const clientId = clientRes.data.clientId;
+    const clientId = clientRes.data.clientId || clientRes.data.data?.clientId || clientRes.data.id;
 
     // Book appointment
     const bookingData = new URLSearchParams({
