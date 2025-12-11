@@ -10,7 +10,7 @@ const CONFIG = {
   CLIENT_ID: 'a7139b22-775f-4938-8ecb-54aa23a1948d',
   CLIENT_SECRET: 'b566556f-e65d-47dd-a27d-dd1060d9fe2d',
   TENANT_ID: '4',
-  LOCATION_ID: '3'
+  LOCATION_ID: '5'
 };
 
 let token = null;
