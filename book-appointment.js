@@ -40,16 +40,29 @@ app.post('/book', async (req, res) => {
     const authToken = await getToken();
 
     // Create client
+    const clientData = {
+      FirstName: first_name,
+      LastName: last_name,
+      EmailAddress: email,  // Correct field name (not "Email")
+      ObjectState: 2026,
+      OnlineBookingAccess: true
+    };
+
+    // Add phone in correct array format
+    if (phone) {
+      const cleanPhone = phone.replace(/\D/g, '');
+      clientData.PhoneNumbers = [{
+        Type: 21,  // Mobile phone type
+        CountryCode: "1",
+        Number: cleanPhone,
+        IsPrimary: true,
+        SmsCommOptedInState: 2087
+      }];
+    }
+
     const clientRes = await axios.post(
       `${CONFIG.API_URL}/client?TenantId=${CONFIG.TENANT_ID}&LocationId=${CONFIG.LOCATION_ID}`,
-      {
-        FirstName: first_name,
-        LastName: last_name,
-        Email: email,
-        MobilePhone: phone?.replace(/\D/g, ''),
-        ObjectState: 2026,
-        OnlineBookingAccess: true
-      },
+      clientData,
       { headers: { Authorization: `Bearer ${authToken}` }}
     );
 
