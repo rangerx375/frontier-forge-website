@@ -31,53 +31,22 @@ async function getToken() {
 
 app.post('/book', async (req, res) => {
   try {
-    const { first_name, last_name, phone, email, service, stylist, datetime } = req.body;
+    const { client_id, service, stylist, datetime } = req.body;
 
-    if (!first_name || !last_name || !email || !service) {
-      return res.json({ success: false, error: 'Missing required fields' });
+    if (!client_id || !service || !datetime) {
+      return res.json({
+        success: false,
+        error: 'Missing required fields: client_id, service, and datetime are required'
+      });
     }
 
     const authToken = await getToken();
 
-    // Create client
-    const clientData = {
-      FirstName: first_name,
-      LastName: last_name,
-      EmailAddress: email,  // Correct field name (not "Email")
-      ObjectState: 2026,
-      OnlineBookingAccess: true
-    };
-
-    // Add phone in correct array format
-    if (phone) {
-      const cleanPhone = phone.replace(/\D/g, '');
-      clientData.PhoneNumbers = [{
-        Type: 21,  // Mobile phone type
-        CountryCode: "1",
-        Number: cleanPhone,
-        IsPrimary: true,
-        SmsCommOptedInState: 2087
-      }];
-    }
-
-    const clientRes = await axios.post(
-      `${CONFIG.API_URL}/client?TenantId=${CONFIG.TENANT_ID}&LocationId=${CONFIG.LOCATION_ID}`,
-      clientData,
-      { headers: { Authorization: `Bearer ${authToken}` }}
-    );
-
-    const clientId = clientRes.data.clientId || clientRes.data.data?.clientId || clientRes.data.id;
-    console.log('Client created:', clientId);
-
-    if (!clientId) {
-      return res.json({ success: false, error: 'Client created but no ID returned', debug: clientRes.data });
-    }
-
-    // Book appointment
+    // Book appointment for existing client
     const bookingData = new URLSearchParams({
       ServiceId: service,
-      StartTime: datetime || new Date(Date.now() + 86400000).toISOString().slice(0,19) + '-08:00',
-      ClientId: clientId,
+      StartTime: datetime,
+      ClientId: client_id,
       ClientGender: 2035
     });
 
