@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="98" fill="rgba(245,242,237,0.95)"/>
+
+  <!-- Outer ring -->
+  <circle cx="100" cy="100" r="96" fill="none" stroke="#1a1a1a" stroke-width="6"/>
+  <!-- Inner ring -->
+  <circle cx="100" cy="100" r="76" fill="none" stroke="#1a1a1a" stroke-width="3"/>
+
+  <!-- FRONTIER FORGE INSTITUTE - top, right-side up -->
+  <path id="topText" d="M 18,100 A 82,82 0 0,1 182,100" fill="none"/>
+  <text font-family="Arial Black, Impact, sans-serif" font-size="14" font-weight="900" fill="#1a1a1a" letter-spacing="3">
+    <textPath href="#topText" startOffset="50%" text-anchor="middle">FRONTIER FORGE INSTITUTE</textPath>
+  </text>
+
+  <!-- WEST VIRGINIA - bottom, right-side up -->
+  <path id="bottomText" d="M 26,118 A 74,74 0 0,0 174,118" fill="none"/>
+  <text font-family="Arial Black, Impact, sans-serif" font-size="14" font-weight="900" fill="#1a1a1a" letter-spacing="5">
+    <textPath href="#bottomText" startOffset="50%" text-anchor="middle">WEST VIRGINIA</textPath>
+  </text>
+
+  <!-- Side bullets -->
+  <circle cx="22" cy="100" r="5" fill="#1a1a1a"/>
+  <circle cx="178" cy="100" r="5" fill="#1a1a1a"/>
+
+  <!-- Anvil -->
+  <path d="M56 142 L66 130 L134 130 L144 142 Z" fill="#1a1a1a"/>
+  <path d="M70 130 L74 102 L126 102 L130 130 Z" fill="#1a1a1a"/>
+  <rect x="84" y="88" width="32" height="14" fill="#1a1a1a"/>
+
+  <!-- FFI on anvil -->
+  <text x="100" y="122" font-family="Arial Black, Impact, sans-serif" font-size="24" font-weight="900" fill="#f5f2ed" text-anchor="middle">FFI</text>
+
+  <!-- Spark -->
+  <polygon points="100,58 103,68 100,78 97,68" fill="#1a1a1a"/>
+  <circle cx="100" cy="52" r="5" fill="#1a1a1a"/>
+</svg>
