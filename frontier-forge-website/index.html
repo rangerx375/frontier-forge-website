@@ -10,6 +10,41 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Scroll Animations */
+        [data-animate] {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        [data-animate].visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        [data-animate="fade-up"] { transform: translateY(40px); }
+        [data-animate="fade-left"] { transform: translateX(-40px); }
+        [data-animate="fade-right"] { transform: translateX(40px); }
+        [data-animate="scale"] { transform: scale(0.95); }
+        [data-animate].visible { transform: translateY(0) translateX(0) scale(1); }
+
+        /* Stagger children */
+        .stagger-children > * {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .stagger-children.visible > *:nth-child(1) { transition-delay: 0.1s; }
+        .stagger-children.visible > *:nth-child(2) { transition-delay: 0.2s; }
+        .stagger-children.visible > *:nth-child(3) { transition-delay: 0.3s; }
+        .stagger-children.visible > *:nth-child(4) { transition-delay: 0.4s; }
+        .stagger-children.visible > *:nth-child(5) { transition-delay: 0.5s; }
+        .stagger-children.visible > *:nth-child(6) { transition-delay: 0.6s; }
+        .stagger-children.visible > *:nth-child(7) { transition-delay: 0.7s; }
+        .stagger-children.visible > * { opacity: 1; transform: translateY(0); }
+
+        /* Smooth scroll */
+        html { scroll-behavior: smooth; }
+    </style>
 </head>
 <body>
     <!-- PARTICLE CANVAS FOR EMBERS -->
@@ -60,7 +95,7 @@
     </section>
 
     <!-- Opening Statement -->
-    <section class="opening-statement">
+    <section class="opening-statement" data-animate="fade-up">
         <div class="container">
             <blockquote>
                 <p>Boys don't need more entertainment.<br>
@@ -71,7 +106,7 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="about">
+    <section id="about" class="about" data-animate="fade-up">
         <div class="container">
             <div class="about-content">
                 <p class="lead">Frontier Forge Institute (FFI), known simply as <strong>"The Forge,"</strong> is a one-week, field-based leadership course designed for motivated young men ages 13–17.</p>
@@ -81,14 +116,14 @@
     </section>
 
     <!-- Mission Section -->
-    <section id="mission" class="mission">
+    <section id="mission" class="mission" data-animate="fade-up">
         <div class="container">
             <div class="section-header">
                 <h2>The Forge Mission</h2>
                 <div class="header-line"></div>
             </div>
             <p class="mission-statement">To help young men develop the habits and skills that produce leadership:</p>
-            <div class="mission-grid">
+            <div class="mission-grid stagger-children">
                 <div class="mission-item">
                     <div class="mission-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -139,7 +174,7 @@
     </section>
 
     <!-- Biblical Foundation -->
-    <section id="foundation" class="foundation">
+    <section id="foundation" class="foundation" data-animate="fade-up">
         <div class="container">
             <div class="foundation-content">
                 <div class="section-header">
@@ -158,14 +193,14 @@
     </section>
 
     <!-- Course Focus Section -->
-    <section id="course" class="course-focus">
+    <section id="course" class="course-focus" data-animate="fade-up">
         <div class="container">
             <div class="section-header">
                 <h2>Course Focus</h2>
                 <div class="header-line"></div>
             </div>
             <p class="course-intro">The Forge combines high-adventure field training with real-world readiness skills:</p>
-            <div class="focus-grid">
+            <div class="focus-grid stagger-children">
                 <div class="focus-item">
                     <span class="focus-number">01</span>
                     <h3>Field Leadership & Team Standards</h3>
@@ -212,7 +247,7 @@
     </section>
 
     <!-- Standards Section -->
-    <section id="standards" class="standards">
+    <section id="standards" class="standards" data-animate="fade-up">
         <div class="container">
             <div class="section-header">
                 <h2>Course Standards & Culture</h2>
@@ -238,14 +273,14 @@
     </section>
 
     <!-- Who Is This For Section -->
-    <section id="who" class="who-section">
+    <section id="who" class="who-section" data-animate="fade-up">
         <div class="container">
             <div class="section-header">
                 <h2>A Serious Course for Serious Students</h2>
                 <div class="header-line"></div>
             </div>
             <p class="who-intro">The Forge is designed for young men who:</p>
-            <div class="who-grid">
+            <div class="who-grid stagger-children">
                 <div class="who-item">
                     <span class="checkmark">&#10003;</span>
                     <p>Are motivated to grow</p>
@@ -270,14 +305,14 @@
     </section>
 
     <!-- Schedule Section -->
-    <section id="schedule" class="schedule">
+    <section id="schedule" class="schedule" data-animate="fade-up">
         <div class="container">
             <div class="section-header">
                 <h2>What the Week Looks Like</h2>
                 <div class="header-line"></div>
             </div>
             <p class="schedule-intro">Each day includes:</p>
-            <div class="schedule-grid">
+            <div class="schedule-grid stagger-children">
                 <div class="schedule-item">
                     <div class="schedule-time">Dawn</div>
                     <h3>Morning Discipline & Physical Training</h3>
@@ -316,7 +351,7 @@
     </section>
 
     <!-- Location Section -->
-    <section id="location" class="location">
+    <section id="location" class="location" data-animate="fade-up">
         <div class="location-image" style="background-image: url('assets/hiker.jpg');"></div>
         <div class="location-content">
             <div class="section-header">
@@ -335,13 +370,13 @@
     </section>
 
     <!-- Tuition Section -->
-    <section id="tuition" class="tuition">
+    <section id="tuition" class="tuition" data-animate="fade-up">
         <div class="container">
             <div class="section-header">
                 <h2>Tuition</h2>
                 <div class="header-line"></div>
             </div>
-            <div class="pricing-grid">
+            <div class="pricing-grid stagger-children">
                 <div class="price-card early">
                     <div class="price-badge">Early Enrollment</div>
                     <div class="price">$1,295</div>
@@ -369,7 +404,7 @@
     </section>
 
     <!-- Limited Enrollment Banner -->
-    <section class="limited-banner">
+    <section class="limited-banner" data-animate="scale">
         <div class="container">
             <h2>Limited Enrollment</h2>
             <p>The Forge is intentionally small. Students receive high supervision, strong mentoring, and a training environment built around seriousness, respect, and performance.</p>
@@ -377,7 +412,7 @@
     </section>
 
     <!-- Founder Section -->
-    <section id="founder" class="founder">
+    <section id="founder" class="founder" data-animate="fade-up">
         <div class="container">
             <div class="section-header">
                 <h2>About Our Founder</h2>
@@ -416,7 +451,7 @@
     </section>
 
     <!-- Enrollment Section -->
-    <section id="enroll" class="enroll">
+    <section id="enroll" class="enroll" data-animate="fade-up">
         <div class="container">
             <div class="section-header">
                 <h2>Apply / Enroll</h2>
@@ -464,5 +499,20 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Scroll-triggered animations
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('[data-animate], .stagger-children');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            elements.forEach(el => observer.observe(el));
+        };
+        document.addEventListener('DOMContentLoaded', animateOnScroll);
+    </script>
 </body>
 </html>
