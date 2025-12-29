@@ -726,8 +726,9 @@
     <footer class="footer">
         <div class="container">
             <img src="assets/logo.png" alt="Frontier Forge Institute" class="footer-logo">
-            <p class="tagline">"The Forge"</p>
-            <p class="motto"><strong>Built under pressure.</strong></p>
+            <p class="tagline">"Be watchful, stand firm in the faith, act like men, be strong."</p>
+            <p class="scripture-ref">— 1 Corinthians 16:13</p>
+            <p class="motto"><strong>Forging Leaders of Tomorrow</strong></p>
             <div class="footer-links">
                 <a href="privacy.html">Privacy Policy</a>
                 <span>|</span>
@@ -826,32 +827,53 @@
     }
 
     // AUTO-SAVE FORM DATA
-    const form = document.getElementById('applicationForm');
-    const formInputs = form.querySelectorAll('input, select, textarea');
+    (function() {
+        const appForm = document.getElementById('applicationForm');
+        if (!appForm) return;
 
-    // Load saved data on page load
-    const savedData = JSON.parse(localStorage.getItem('ffi_form_draft') || '{}');
-    formInputs.forEach(input => {
-        if (input.type === 'checkbox') {
-            if (savedData[input.name]) input.checked = savedData[input.name];
-        } else if (savedData[input.name]) {
-            input.value = savedData[input.name];
+        const STORAGE_KEY = 'ffi_form_draft';
+        const formInputs = appForm.querySelectorAll('input, select, textarea');
+
+        // Load saved data on page load
+        try {
+            const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+            formInputs.forEach(input => {
+                if (!input.name) return;
+                if (input.type === 'checkbox') {
+                    input.checked = savedData[input.name] === true;
+                } else if (savedData[input.name] !== undefined) {
+                    input.value = savedData[input.name];
+                }
+            });
+        } catch(e) {
+            console.log('Could not load saved form data');
         }
-    });
 
-    // Save as user types
-    formInputs.forEach(input => {
-        input.addEventListener('input', () => {
-            const data = JSON.parse(localStorage.getItem('ffi_form_draft') || '{}');
-            data[input.name] = input.type === 'checkbox' ? input.checked : input.value;
-            localStorage.setItem('ffi_form_draft', JSON.stringify(data));
+        // Save function
+        function saveFormData() {
+            try {
+                const data = {};
+                formInputs.forEach(input => {
+                    if (!input.name) return;
+                    data[input.name] = input.type === 'checkbox' ? input.checked : input.value;
+                });
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            } catch(e) {
+                console.log('Could not save form data');
+            }
+        }
+
+        // Save on input (text fields) and change (selects, checkboxes)
+        formInputs.forEach(input => {
+            input.addEventListener('input', saveFormData);
+            input.addEventListener('change', saveFormData);
         });
-    });
 
-    // Clear draft after successful submission
-    form.addEventListener('submit', () => {
-        localStorage.removeItem('ffi_form_draft');
-    });
+        // Clear draft after successful submission
+        appForm.addEventListener('submit', () => {
+            localStorage.removeItem(STORAGE_KEY);
+        });
+    })();
 
         </script>
 </body>
