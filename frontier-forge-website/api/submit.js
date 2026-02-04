@@ -49,7 +49,7 @@ export default async function handler(req, res) {
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: SHEET_ID,
-      range: 'Sheet1!A:Y',
+      range: "'Forge Applicants'!A:Y",
       valueInputOption: 'RAW',
       requestBody: { values: row }
     });
