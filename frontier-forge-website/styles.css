@@ -1317,6 +1317,94 @@ strong {
     margin: 0;
 }
 
+/* FAQ Section */
+.faq-section {
+    padding: var(--spacing-xl) var(--spacing-md);
+    background: var(--color-forest);
+    color: var(--color-off-white);
+}
+
+.faq-section h2 {
+    color: var(--color-white);
+}
+
+.faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    border-bottom: 1px solid rgba(184, 115, 51, 0.2);
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+.faq-question {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-off-white);
+    padding: var(--spacing-md) 0;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color var(--transition);
+}
+
+.faq-question::-webkit-details-marker {
+    display: none;
+}
+
+.faq-question::after {
+    content: '+';
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-copper);
+    flex-shrink: 0;
+    margin-left: var(--spacing-md);
+    transition: transform 0.3s ease;
+}
+
+.faq-item[open] .faq-question::after {
+    content: '\2212';
+    transform: rotate(180deg);
+}
+
+.faq-question:hover {
+    color: var(--color-copper);
+}
+
+.faq-answer {
+    padding: 0 0 var(--spacing-md) 0;
+    line-height: 1.8;
+    font-size: 1rem;
+    color: var(--color-light-gray);
+}
+
+.faq-answer p {
+    margin-bottom: 0;
+}
+
+.faq-answer strong {
+    color: var(--color-copper);
+}
+
+.faq-answer em {
+    font-style: italic;
+}
+
+section.visible .faq-item { animation: contactFade 0.5s ease-out both; }
+section.visible .faq-item:nth-child(1) { animation-delay: 0.1s; }
+section.visible .faq-item:nth-child(2) { animation-delay: 0.15s; }
+section.visible .faq-item:nth-child(3) { animation-delay: 0.2s; }
+section.visible .faq-item:nth-child(4) { animation-delay: 0.25s; }
+section.visible .faq-item:nth-child(5) { animation-delay: 0.3s; }
+section.visible .faq-item:nth-child(6) { animation-delay: 0.35s; }
+
 /* Responsive */
 @media (max-width: 900px) {
     .location {
