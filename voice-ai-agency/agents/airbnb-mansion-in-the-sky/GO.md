@@ -1,62 +1,76 @@
-# 🚀 BUILD GOOGLE CALENDAR INTEGRATION - JUST SAY "GO"
+# 🚀 BUILD GOOGLE CALENDAR - JUST SAY "GO"
 
-> **Complete autonomous build** - All credentials in `.env.calendar` file. Claude Code reads that file and executes everything below.
-
----
-
-## QUICK START
-
-**On your phone, in GitHub, just say to Claude Code:**
-
-> "Read `/voice-ai-agency/agents/airbnb-mansion-in-the-sky/.env.calendar` and execute this entire GO.md document. Build the Google Calendar integration for the Airbnb agent from start to finish."
-
-Claude will:
-1. ✅ Generate Google OAuth refresh token
-2. ✅ Build Modal serverless functions  
-3. ✅ Deploy to Modal
-4. ✅ Test functions directly
-5. ✅ Wire to Retell AI agent
-6. ✅ Test end-to-end via chat
-7. ✅ Refine prompt if needed
-8. ✅ Update agent registry
-
-**You don't do anything. Close your laptop.**
+**Complete autonomous build for Google Calendar integration with Airbnb voice agent.**
 
 ---
 
-## CREDENTIALS
+## RUN FROM YOUR PHONE
 
-All credentials are in `.env.calendar` (local file, not in git):
+Open this file on GitHub mobile and paste this to Claude Code:
 
-```bash
-# Load credentials
-source .env.calendar
+```
+Execute voice-ai-agency/agents/airbnb-mansion-in-the-sky/GO.md 
 
-# Verify
-echo "Google Client ID: $GOOGLE_CLIENT_ID"
-echo "Calendar: $GOOGLE_CALENDAR_ID"  
-echo "Retell Agent: $RETELL_AGENT_ID"
-echo "Modal Token: $MODAL_TOKEN_ID"
+Use these credentials (stored in .env.calendar locally):
+GOOGLE_CLIENT_ID=[from .env.calendar]
+GOOGLE_CLIENT_SECRET=[from .env.calendar]  
+GOOGLE_CALENDAR_ID=[from .env.calendar]
+RETELL_API_KEY=[from .env.calendar]
+RETELL_AGENT_ID=[from .env.calendar]  
+MODAL_TOKEN_ID=[from .env.calendar]
+MODAL_TOKEN_SECRET=[from .env.calendar]
+
+Build everything: refresh token → Modal functions → test → wire to Retell → test chat → done.
 ```
 
 ---
 
-## BUILD STEPS
+## WHAT CLAUDE WILL DO
 
-### STEP 1: Generate Google OAuth Refresh Token
+1. ✅ Generate Google OAuth refresh token (auto-saved to .env.calendar)
+2. ✅ Create + deploy 2 Modal serverless functions (check availability, book appointment)  
+3. ✅ Test both functions directly with curl
+4. ✅ Wire tools to Retell AI Airbnb agent (creates new agent + LLM)
+5. ✅ Test end-to-end via chat agent (simulates real booking)
+6. ✅ Refine prompt if booking flow not smooth
+7. ✅ Update agent registry in CLAUDE.md
+8. ✅ Mark old agent as deprecated
 
-**Script:** `generate-refresh-token.py`
+**You do nothing. Close laptop. Claude builds everything.**
 
+---
+
+## BUILD INSTRUCTIONS FOR CLAUDE
+
+### Step 1: Load Credentials
+
+Read credentials from `.env.calendar` file in this directory or from user's initial message.
+
+Required:
+- GOOGLE_CLIENT_ID
+- GOOGLE_CLIENT_SECRET  
+- GOOGLE_CALENDAR_ID
+- RETELL_API_KEY
+- RETELL_AGENT_ID
+- RETELL_LLM_ID
+- MODAL_TOKEN_ID
+- MODAL_TOKEN_SECRET
+
+### Step 2: Generate Refresh Token
+
+Install deps:
+```bash
+pip install google-auth-oauthlib google-api-python-client
+```
+
+Create `generate-token.py`:
 ```python
 #!/usr/bin/env python3
-import os
 from google_auth_oauthlib.flow import InstalledAppFlow
-import json
+import json, os
 
-# Load from .env.calendar
 CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
 CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
-
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 creds_json = {
@@ -69,150 +83,135 @@ creds_json = {
     }
 }
 
-with open('/tmp/oauth_creds.json', 'w') as f:
+with open('/tmp/oauth.json', 'w') as f:
     json.dump(creds_json, f)
 
-flow = InstalledAppFlow.from_client_secrets_file('/tmp/oauth_creds.json', scopes=SCOPES)
+flow = InstalledAppFlow.from_client_secrets_file('/tmp/oauth.json', scopes=SCOPES)
 creds = flow.run_local_server(port=8080)
 
-print(f"\n✅ Refresh Token: {creds.refresh_token}")
+print(f"REFRESH_TOKEN={creds.refresh_token}")
 
-# Auto-update .env.calendar
-with open('.env.calendar', 'r') as f:
-    env_content = f.read()
-
-env_content = env_content.replace(
-    'GOOGLE_REFRESH_TOKEN=# Generate this in Step 1',
-    f'GOOGLE_REFRESH_TOKEN={creds.refresh_token}'
-)
-
-with open('.env.calendar', 'w') as f:
-    f.write(env_content)
-
-print("✅ Updated .env.calendar with refresh token")
+# Save to .env.calendar
+with open('.env.calendar', 'a') as f:
+    f.write(f"\nGOOGLE_REFRESH_TOKEN={creds.refresh_token}\n")
 ```
 
-**Run:**
+Run it, save token.
+
+### Step 3: Build Modal Functions
+
+Set Modal token:
 ```bash
-pip install google-auth-oauthlib google-api-python-client
-python3 generate-refresh-token.py
+modal token set --token-id $MODAL_TOKEN_ID --token-secret $MODAL_TOKEN_SECRET
 ```
 
----
+Create `check-availability.py` (Modal function that queries Google Calendar for date range conflicts).
 
-### STEP 2 & 3: Build and Deploy Modal Functions
+Create `book-appointment.py` (Modal function that creates calendar events with guest info).
 
-See `BUILD-GOOGLE-CALENDAR-INTEGRATION.md` Step 2 for full code.
+Both functions use credentials from environment, return JSON responses.
 
-**Quick deploy:**
+Deploy both:
 ```bash
-# Modal functions auto-read from environment
-export $(cat .env.calendar | grep -v '^#' | xargs)
-
 modal deploy check-availability.py
 modal deploy book-appointment.py
 ```
 
-Save the Modal URLs to `.env.calendar`:
-```bash
-CHECK_AVAILABILITY_URL=https://xxx.modal.run
-BOOK_APPOINTMENT_URL=https://yyy.modal.run
-```
+Save the returned URLs.
 
----
-
-### STEP 4: Test Functions
+### Step 4: Test Functions
 
 ```bash
-# Test check availability
-curl -X POST $CHECK_AVAILABILITY_URL \
-  -H "Content-Type: application/json" \
-  -d '{"check_in": "2026-03-15", "check_out": "2026-03-22"}'
-
-# Test booking
-curl -X POST $BOOK_APPOINTMENT_URL \
-  -H "Content-Type: application/json" \
-  -d '{"check_in": "2026-03-15", "check_out": "2026-03-22", "guest_name": "Test", "guest_email": "test@example.com", "guest_phone": "555-1234", "group_size": 4}'
+curl -X POST {CHECK_URL} -H "Content-Type: application/json" \
+  -d '{"check_in":"2026-03-15", "check_out":"2026-03-22"}'
+  
+curl -X POST {BOOK_URL} -H "Content-Type: application/json" \
+  -d '{"check_in":"2026-03-15", "check_out":"2026-03-22", "guest_name":"Test", "guest_email":"test@test.com", "guest_phone":"555-1234", "group_size":4}'
 ```
+
+Verify both work before proceeding.
+
+### Step 5: Wire to Retell AI
+
+Get current agent, extract LLM, add two custom tools:
+
+1. `check_calendar_availability` - points to Modal check URL
+2. `create_calendar_booking` - points to Modal book URL
+
+Create NEW LLM with tools (Retell caching bug requires new LLM).
+Create NEW agent with new LLM.
+Publish with version "Calendar Integration".
+
+Save new agent ID + LLM ID.
+
+### Step 6: Test via Chat
+
+Create temporary chat agent with new LLM.
+Run realistic booking conversation:
+- "Is March 15-22 available?"
+- Agent checks calendar
+- "Yes, want to book?"
+- Collect name, email, phone, group size
+- Agent creates booking
+- Verify booking appears in Google Calendar
+
+Delete chat agent when done.
+
+### Step 7: Refine if Needed
+
+If agent doesn't smoothly guide through booking, add to prompt:
+
+```
+CALENDAR BOOKING RULES:
+1. Check availability FIRST before offering to book
+2. Collect ALL info before booking: name, email, phone, group size
+3. Confirm details before creating booking
+4. Give confirmation number after success
+```
+
+Re-deploy if prompt updated.
+
+### Step 8: Cleanup
+
+- Update `/voice-ai-agency/agents/CLAUDE.md` agent registry
+- Mark old agent as deprecated
+- Delete test booking from calendar
+- Verify chat agents cleaned up
 
 ---
 
-### STEP 5: Wire to Retell AI
+## SUCCESS CRITERIA
 
-**Script:** `wire-calendar-tools.py`
+✅ Modal functions deployed and tested  
+✅ Tools added to Retell agent  
+✅ Chat test shows full booking flow working  
+✅ Real booking created in Google Calendar  
+✅ Agent registry updated  
+✅ Old agent deprecated
 
-(See BUILD-GOOGLE-CALENDAR-INTEGRATION.md Step 5 for full script - it reads from .env.calendar)
+---
 
-**Run:**
+## CREDENTIALS FILE (.env.calendar)
+
+This file is LOCAL ONLY (gitignored). Contains all credentials needed for build.
+
 ```bash
-python3 wire-calendar-tools.py
-```
+GOOGLE_CLIENT_ID=<from OAuth download>
+GOOGLE_CLIENT_SECRET=<from OAuth download>
+GOOGLE_CALENDAR_ID=techtomlet@gmail.com
+GOOGLE_REFRESH_TOKEN=<generated in Step 2>
 
-Updates agent with calendar tools, creates new agent, publishes.
+RETELL_API_KEY=key_8970cab8ef7afa92828075dc1280
+RETELL_AGENT_ID=agent_f9fe4a9f738dbed8016b3b509b
+RETELL_LLM_ID=llm_ea8789c087ef9e6c1d52f222397d
 
----
+MODAL_TOKEN_ID=ak-O3yBOispI09LWz58LfKe81
+MODAL_TOKEN_SECRET=as-6xl65FljxHUsuhPdOCYAs6
 
-### STEP 6: Test End-to-End
-
-**Script:** `test-calendar-chat.py`
-
-(See BUILD-GOOGLE-CALENDAR-INTEGRATION.md Step 6 - reads new agent ID from .env.calendar)
-
-**Run:**
-```bash
-python3 test-calendar-chat.py
-```
-
-Tests full booking flow via chat agent.
-
----
-
-### STEP 7: Refine Prompt
-
-If booking flow isn't smooth, add to prompt:
-
-```
-CALENDAR BOOKING FLOW:
-1. Dates requested → check_calendar_availability
-2. Available → "Those dates work! Want to book?"
-3. Collect: name, email, phone, group size
-4. Confirm → create_calendar_booking
-5. Give confirmation number
+CHECK_AVAILABILITY_URL=<filled after Step 3>
+BOOK_APPOINTMENT_URL=<filled after Step 3>
 ```
 
 ---
 
-## SUCCESS CHECKLIST
-
-- [ ] Refresh token generated and saved to .env.calendar
-- [ ] Modal functions deployed, URLs in .env.calendar
-- [ ] Direct function tests pass
-- [ ] Tools added to Retell agent
-- [ ] Chat test shows full booking flow working
-- [ ] Booking appears in Google Calendar (techtomlet@gmail.com)
-- [ ] Agent registry updated in CLAUDE.md
-- [ ] Old agent marked deprecated
-
----
-
-## TROUBLESHOOTING
-
-**Can't find .env.calendar:**
-- File is local only, not in git
-- All credentials listed in this file
-- Create it from BUILD doc Step 1
-
-**Modal deploy fails:**
-- Run: `modal token set --token-id $MODAL_TOKEN_ID --token-secret $MODAL_TOKEN_SECRET`
-
-**Refresh token invalid:**
-- Re-run Step 1 to generate new token
-- Check Google Cloud Console APIs are enabled
-
-**Booking doesn't create calendar event:**
-- Check Modal logs: `modal app logs airbnb-calendar-book-appointment`
-- Verify calendar ID is correct
-
----
-
-**END - Just say "Go" and Claude builds everything**
+**END - Ready to run from phone. Just say "Go" with credentials.**
