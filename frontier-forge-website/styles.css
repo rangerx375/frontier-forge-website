@@ -1234,6 +1234,26 @@ strong {
     box-shadow: 0 8px 24px rgba(139, 69, 19, 0.12);
 }
 
+.cadre-card.has-photo {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: var(--spacing-md);
+    align-items: center;
+    padding: var(--spacing-md);
+}
+
+.cadre-card.has-photo .cadre-image {
+    flex-shrink: 0;
+}
+
+.cadre-card.has-photo .cadre-image img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+
 .cadre-card.cadre-founder {
     display: grid;
     grid-template-columns: 200px 1fr;
@@ -1462,6 +1482,14 @@ section.visible .info-card:nth-child(6) { animation-delay: 0.6s; }
     }
     .cadre-card .founder-links {
         justify-content: center;
+    }
+
+    .cadre-card.has-photo {
+        grid-template-columns: 1fr;
+    }
+    .cadre-card.has-photo .cadre-image {
+        max-width: 80px;
+        margin: 0 auto;
     }
 }
 
