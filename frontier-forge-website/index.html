@@ -100,7 +100,21 @@
                 <span>Beckley, West Virginia</span>
             </div>
             <p class="hero-limited" style="color:#ff6b00; font-weight:600;">Registration is Full</p>
-            <span class="btn btn-primary" style="background:#666; cursor:default; opacity:0.8; pointer-events:none;">Registration Full</span>
+
+            <!-- Interest Signup Banner -->
+            <div id="interest-banner" style="margin-top:24px; background:rgba(30,58,47,0.95); border:1px solid rgba(184,115,51,0.4); border-radius:12px; padding:24px 20px; max-width:520px; width:100%; text-align:center;">
+                <p style="font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.05em; color:#fff; margin:0 0 6px;">Don't Miss the Next One</p>
+                <p style="font-size:14px; color:#c0b8a8; margin:0 0 16px; line-height:1.5;">Sign up to be notified about future Forge leadership courses and events.</p>
+                <form id="interestForm" style="display:flex; flex-direction:column; gap:10px; align-items:center;">
+                    <input type="text" name="name" placeholder="Your Name" required style="width:100%; padding:12px 14px; border:2px solid rgba(184,115,51,0.3); border-radius:8px; background:rgba(255,255,255,0.08); color:#fff; font-family:inherit; font-size:15px;">
+                    <input type="email" name="email" placeholder="Your Email" required style="width:100%; padding:12px 14px; border:2px solid rgba(184,115,51,0.3); border-radius:8px; background:rgba(255,255,255,0.08); color:#fff; font-family:inherit; font-size:15px;">
+                    <button type="submit" style="width:100%; padding:14px; background:linear-gradient(135deg, #ff4400, #ff6b00, #ffaa00); color:#fff; font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:0.1em; border:none; border-radius:8px; cursor:pointer;">Keep Me Posted</button>
+                </form>
+                <div id="interest-success" style="display:none;">
+                    <p style="font-size:16px; color:#b87333; font-weight:600; margin:0 0 4px;">You're on the list!</p>
+                    <p style="font-size:13px; color:#c0b8a8; margin:0;">We'll reach out when the next session opens.</p>
+                </div>
+            </div>
         </div>
         <div class="scroll-indicator">
             <span>Scroll</span>
@@ -796,6 +810,36 @@
             elements.forEach(el => observer.observe(el));
         };
         document.addEventListener('DOMContentLoaded', animateOnScroll);
+
+        // Interest form submission
+        document.getElementById('interestForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+
+            const formData = new FormData(this);
+            try {
+                const response = await fetch('/api/interest', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: formData.get('name'),
+                        email: formData.get('email')
+                    }),
+                });
+                if (response.ok) {
+                    this.style.display = 'none';
+                    document.getElementById('interest-success').style.display = 'block';
+                } else {
+                    throw new Error('Failed');
+                }
+            } catch (error) {
+                alert('Something went wrong. Please try again.');
+                btn.disabled = false;
+                btn.textContent = 'Keep Me Posted';
+            }
+        });
     </script>
 </body>
 </html>
