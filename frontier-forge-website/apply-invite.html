@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invited Applicant | Frontier Forge Institute</title>
+    <meta name="description" content="Invited application for The Forge.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* BASE RESET */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #f5f2ed;
+        }
+
+        img { max-width: 100%; height: auto; display: block; }
+        a { color: #8b4513; text-decoration: none; }
+        a:hover { color: #b87333; }
+
+        h1, h2, h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* NAV */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            padding: 12px 16px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo img {
+            height: 45px;
+            width: auto;
+            background: #f5f2ed;
+            border-radius: 50%;
+            padding: 2px;
+        }
+
+        .nav-links { display: none; }
+
+        .mobile-menu-btn {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: #e8e4e0;
+        }
+
+        /* PAGE */
+        .apply-page {
+            padding-top: 70px;
+            min-height: 100vh;
+        }
+
+        /* HERO */
+        .apply-hero {
+            background: #1a1a1a;
+            padding: 24px 16px;
+            text-align: center;
+            color: #e8e4e0;
+        }
+
+        .apply-hero h1 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .apply-hero > p {
+            font-size: 14px;
+            max-width: 100%;
+        }
+
+        /* PROCESS STEPS */
+        .process-steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .process-step {
+            background: rgba(255,255,255,0.05);
+            padding: 12px 8px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .step-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            color: #b87333;
+            display: block;
+        }
+
+        .process-step h3 {
+            color: #fff;
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+
+        .process-step p {
+            font-size: 9px;
+            color: #9a9a9a;
+            margin: 0;
+        }
+
+        /* FORM SECTION */
+        .application-section {
+            padding: 20px 12px;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .back-link {
+            display: inline-block;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+
+        .form-section {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .form-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .form-section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px;
+            letter-spacing: 0.1em;
+            color: #1e3a2f;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-section-title::before {
+            content: '';
+            width: 3px;
+            height: 18px;
+            background: linear-gradient(180deg, #ff4400, #ffaa00);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        /* FORM ELEMENTS */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #1a1a1a;
+        }
+
+        .required { color: #8b4513; }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 16px;
+            background: #fafafa;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #b87333;
+            background: #fff;
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-group small {
+            display: block;
+            font-size: 11px;
+            color: #6a6a6a;
+            margin-top: 4px;
+        }
+
+        .form-group p {
+            font-size: 13px;
+            color: #6a6a6a;
+            margin-bottom: 12px;
+        }
+
+        /* DEPOSIT BOX */
+        .deposit-notice {
+            display: block;
+            width: 100%;
+            background: #1e3a2f;
+            color: #e8e4e0;
+            padding: 16px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border-left: 3px solid #b87333;
+        }
+
+        .deposit-notice h3 {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .deposit-notice .amount {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            color: #b87333;
+            display: block;
+            margin: 8px 0;
+        }
+
+        .deposit-notice > p {
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .deposit-notice ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .deposit-notice li {
+            font-size: 12px;
+            padding: 4px 0 4px 20px;
+            position: relative;
+            line-height: 1.4;
+        }
+
+        .deposit-notice li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #b87333;
+        }
+
+        /* CHECKBOXES */
+        .checkbox-group {
+            display: block;
+            width: 100%;
+            background: #f8f8f8;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            float: left;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            margin-top: 2px;
+            accent-color: #8b4513;
+        }
+
+        .checkbox-group label {
+            display: block;
+            overflow: hidden;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 1.5;
+            cursor: pointer;
+            margin-bottom: 0;
+        }
+
+        /* SUBMIT */
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #ff4400, #ff6b00, #ffaa00);
+            color: #fff;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .submit-btn:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        .form-footer {
+            text-align: center;
+            font-size: 11px;
+            color: #6a6a6a;
+            margin-top: 12px;
+        }
+
+        /* CONFIRMATION */
+        #confirmation {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #confirmation.show {
+            display: block;
+        }
+
+        .checkmark-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 16px;
+        }
+
+        #confirmation h2 {
+            color: #1e3a2f;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        #confirmation > p {
+            color: #6a6a6a;
+            margin-bottom: 20px;
+        }
+
+        .next-steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .step-card {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .step-card.completed {
+            background: #dcfce7;
+        }
+
+        .step-card.active {
+            background: #fff7ed;
+            border: 2px solid #b87333;
+        }
+
+        .step-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #6a6a6a;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .step-card.completed .step-icon { background: #22c55e; }
+        .step-card.active .step-icon { background: #ff6b00; }
+
+        .step-card h3 { font-size: 12px; margin-bottom: 2px; }
+        .step-card p { font-size: 10px; color: #6a6a6a; margin: 0; }
+
+        .redirect-notice {
+            background: #1a1a1a;
+            padding: 16px;
+            border-radius: 10px;
+        }
+
+        .redirect-notice p {
+            color: #9a9a9a;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .calendly-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ff4400, #ff6b00, #ffaa00);
+            color: #fff;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #0a0a0a;
+            color: #9a9a9a;
+            padding: 40px 16px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            width: 80px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+        }
+
+        .tagline {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-style: italic;
+            color: #b87333;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .scripture-ref {
+            font-size: 12px;
+            color: #9a9a9a;
+            margin-bottom: 8px;
+        }
+
+        .motto {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            letter-spacing: 0.1em;
+            color: #e8e4e0;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            font-size: 12px;
+            margin-bottom: 16px;
+        }
+
+        .footer-links a { color: #9a9a9a; }
+        .footer-links span { color: #4a4a4a; margin: 0 8px; }
+
+        .copyright {
+            font-size: 12px;
+        }
+
+        /* DESKTOP STYLES */
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+                list-style: none;
+                gap: 24px;
+                align-items: center;
+            }
+
+            .nav-links a {
+                font-family: 'Bebas Neue', sans-serif;
+                font-size: 16px;
+                letter-spacing: 0.1em;
+                color: #e8e4e0;
+                text-transform: uppercase;
+            }
+
+            .nav-cta {
+                background: linear-gradient(135deg, #ff4400, #ff6b00);
+                padding: 10px 20px;
+                border-radius: 6px;
+                color: #fff !important;
+            }
+
+            .mobile-menu-btn { display: none; }
+
+            .apply-page { padding-top: 100px; }
+
+            .apply-hero {
+                padding: 60px 32px;
+            }
+
+            .apply-hero h1 { font-size: 48px; }
+            .apply-hero > p { font-size: 18px; max-width: 700px; margin: 0 auto; }
+
+            .process-steps {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 16px;
+                max-width: 900px;
+                margin: 32px auto 0;
+            }
+
+            .process-step { padding: 20px 16px; }
+            .step-number { font-size: 36px; }
+            .process-step h3 { font-size: 14px; }
+            .process-step p { font-size: 12px; }
+
+            .application-section { padding: 60px 32px; }
+
+            .form-container {
+                max-width: 750px;
+                margin: 0 auto;
+                padding: 48px;
+                border-radius: 20px;
+            }
+
+            .form-section-title { font-size: 20px; }
+
+            .form-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .form-row-3 {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 20px;
+            }
+
+            .deposit-notice { padding: 24px; }
+            .deposit-notice .amount { font-size: 40px; }
+
+            .checkbox-group { padding: 16px; }
+            .checkbox-group label { font-size: 14px; }
+
+            .submit-btn { font-size: 20px; padding: 20px; }
+
+            .next-steps-container { flex-direction: row; justify-content: center; }
+            .step-card { min-width: 150px; }
+
+            .tagline { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png" alt="Frontier Forge Institute">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#mission">Mission</a></li>
+                <li><a href="index.html#course">The Course</a></li>
+                <li><a href="index.html#schedule">Schedule</a></li>
+                <li><a href="index.html#founder">Founder</a></li>
+                <li><a href="index.html" class="nav-cta">Home</a></li>
+            </ul>
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="apply-page">
+        <section class="apply-hero">
+            <h1>Invited Applicant</h1>
+            <p>Please complete the application below to reserve the final spot in the August 2026 session of The Forge.</p>
+
+            <div class="process-steps">
+                <div class="process-step">
+                    <span class="step-number">1</span>
+                    <h3>Submit Application</h3>
+                    <p>Form & $250 deposit</p>
+                </div>
+                <div class="process-step">
+                    <span class="step-number">2</span>
+                    <h3>Interview</h3>
+                    <p>20-30 min call</p>
+                </div>
+                <div class="process-step">
+                    <span class="step-number">3</span>
+                    <h3>Decision</h3>
+                    <p>Within 48 hours</p>
+                </div>
+                <div class="process-step">
+                    <span class="step-number">4</span>
+                    <h3>Enroll</h3>
+                    <p>Pay balance</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="application-section">
+            <div class="form-container">
+                <a href="index.html" class="back-link">← Back to Home</a>
+
+                <form id="applicationForm">
+                    <div class="form-section">
+                        <h2 class="form-section-title">Parent/Guardian Info</h2>
+                        <div class="form-group">
+                            <label>Parent/Guardian Name <span class="required">*</span></label>
+                            <input type="text" name="parent_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Relationship <span class="required">*</span></label>
+                            <select name="relationship" required>
+                                <option value="">Select...</option>
+                                <option value="Father">Father</option>
+                                <option value="Mother">Mother</option>
+                                <option value="Legal Guardian">Legal Guardian</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Email <span class="required">*</span></label>
+                            <input type="email" name="parent_email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone <span class="required">*</span></label>
+                            <input type="tel" name="parent_phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Street Address <span class="required">*</span></label>
+                            <input type="text" name="address" required>
+                        </div>
+                        <div class="form-group">
+                            <label>City <span class="required">*</span></label>
+                            <input type="text" name="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label>State <span class="required">*</span></label>
+                            <input type="text" name="state" required>
+                        </div>
+                        <div class="form-group">
+                            <label>ZIP <span class="required">*</span></label>
+                            <input type="text" name="zip" required>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="form-section-title">Student Info</h2>
+                        <div class="form-group">
+                            <label>Student's Full Name <span class="required">*</span></label>
+                            <input type="text" name="student_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Date of Birth <span class="required">*</span></label>
+                            <input type="date" name="student_dob" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Age (as of Aug 2, 2025) <span class="required">*</span></label>
+                            <input type="number" name="student_age" min="13" max="17" required>
+                            <small>Must be 13-17 years old</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Student's Email</label>
+                            <input type="email" name="student_email">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="form-section-title">Health Info</h2>
+                        <p>This helps ensure your son's safety. All info is confidential.</p>
+                        <div class="form-group">
+                            <label>Allergies</label>
+                            <textarea name="allergies" placeholder="Food, medication, environmental, or 'None'"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Medications</label>
+                            <textarea name="medications" placeholder="Current medications or 'None'"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Medical Conditions</label>
+                            <textarea name="health_conditions" placeholder="Asthma, diabetes, etc. or 'None'"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Physical Limitations</label>
+                            <textarea name="injuries" placeholder="Recent injuries or 'None'"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Dietary Restrictions</label>
+                            <textarea name="dietary" placeholder="Special dietary needs or 'None'"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="form-section-title">Additional Info</h2>
+                        <div class="form-group">
+                            <label>Why The Forge? <span class="required">*</span></label>
+                            <textarea name="interest_reason" required placeholder="What drew you to this program?"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>How did you hear about us?</label>
+                            <select name="referral_source">
+                                <option value="">Select...</option>
+                                <option value="Chuck Holton / The Hot Zone">Chuck Holton / The Hot Zone</option>
+                                <option value="Social Media">Social Media</option>
+                                <option value="Friend/Family">Friend/Family</option>
+                                <option value="Church">Church</option>
+                                <option value="Web Search">Web Search</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Anything else?</label>
+                            <textarea name="additional_info" placeholder="Additional info about your son"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="form-section-title">Emergency Contact</h2>
+                        <p>Someone other than yourself.</p>
+                        <div class="form-group">
+                            <label>Name <span class="required">*</span></label>
+                            <input type="text" name="emergency_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Relationship <span class="required">*</span></label>
+                            <input type="text" name="emergency_relationship" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone <span class="required">*</span></label>
+                            <input type="tel" name="emergency_phone" required>
+                        </div>
+                    </div>
+
+                    <div style="display:block; width:100%; max-width:100%; background:#1e3a2f; color:#e8e4e0; padding:16px; margin:0 0 20px 0; border-radius:10px; border-left:3px solid #b87333; box-sizing:border-box;">
+                        <h3 style="color:#fff; font-size:14px; margin:0 0 4px 0;">Application Deposit</h3>
+                        <span style="font-family:'Bebas Neue',sans-serif; font-size:32px; color:#b87333; display:block; margin:8px 0;">$250</span>
+                        <p style="font-size:13px; margin:0 0 12px 0;">Required to complete your application.</p>
+                        <ul style="list-style:none; padding:0; margin:0;">
+                            <li style="font-size:12px; padding:4px 0; padding-left:20px; position:relative;"><span style="position:absolute; left:0; color:#b87333;">✓</span> <strong>Fully refundable</strong> if not admitted</li>
+                            <li style="font-size:12px; padding:4px 0; padding-left:20px; position:relative;"><span style="position:absolute; left:0; color:#b87333;">✓</span> Applied toward tuition if accepted</li>
+                            <li style="font-size:12px; padding:4px 0; padding-left:20px; position:relative;"><span style="position:absolute; left:0; color:#b87333;">✓</span> Non-refundable after admission</li>
+                        </ul>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="form-section-title">Acknowledgments</h2>
+
+                        <div style="display:block; width:100%; background:#f8f8f8; padding:12px; border-radius:8px; margin-bottom:12px; box-sizing:border-box;">
+                            <input type="checkbox" id="ack_interview" name="ack_interview" required style="float:left; width:20px; height:20px; margin-right:10px; margin-top:2px;">
+                            <label for="ack_interview" style="display:block; overflow:hidden; font-size:12px; line-height:1.5; cursor:pointer;">I understand all applicants must complete an interview before admission. <span style="color:#8b4513;">*</span></label>
+                        </div>
+
+                        <div style="display:block; width:100%; background:#f8f8f8; padding:12px; border-radius:8px; margin-bottom:12px; box-sizing:border-box;">
+                            <input type="checkbox" id="ack_deposit" name="ack_deposit" required style="float:left; width:20px; height:20px; margin-right:10px; margin-top:2px;">
+                            <label for="ack_deposit" style="display:block; overflow:hidden; font-size:12px; line-height:1.5; cursor:pointer;">I understand the deposit is refundable if not admitted, non-refundable upon acceptance. <span style="color:#8b4513;">*</span></label>
+                        </div>
+
+                        <div style="display:block; width:100%; background:#f8f8f8; padding:12px; border-radius:8px; margin-bottom:12px; box-sizing:border-box;">
+                            <input type="checkbox" id="ack_accurate" name="ack_accurate" required style="float:left; width:20px; height:20px; margin-right:10px; margin-top:2px;">
+                            <label for="ack_accurate" style="display:block; overflow:hidden; font-size:12px; line-height:1.5; cursor:pointer;">I certify all information is accurate. <span style="color:#8b4513;">*</span></label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit & Pay $250</button>
+                    <p class="form-footer">You'll be directed to schedule your interview.</p>
+                </form>
+
+                <div id="confirmation">
+                    <div class="checkmark-circle">✓</div>
+                    <h2>Application Received</h2>
+                    <p>Thank you for applying!</p>
+
+                    <div class="next-steps-container">
+                        <div class="step-card completed">
+                            <div class="step-icon">✓</div>
+                            <h3>Submitted</h3>
+                            <p>Complete</p>
+                        </div>
+                        <div class="step-card active">
+                            <div class="step-icon">2</div>
+                            <h3>Interview</h3>
+                            <p>Redirecting...</p>
+                        </div>
+                    </div>
+
+                    <div class="redirect-notice">
+                        <p>Redirecting to schedule interview...</p>
+                        <a href="https://calendly.com/holtocw/forge-30min-interview" target="_blank" class="calendly-btn">Schedule Interview</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <img src="assets/logo.png" alt="Frontier Forge Institute" class="footer-logo">
+        <p class="tagline">"Be watchful, stand firm in the faith, act like men, be strong."</p>
+        <p class="scripture-ref">— 1 Corinthians 16:13</p>
+        <p class="motto">Forging Leaders of Tomorrow</p>
+        <div class="footer-links">
+            <a href="privacy.html">Privacy Policy</a>
+            <span>|</span>
+            <a href="terms.html">Terms of Service</a>
+        </div>
+        <p class="copyright">© 2025 Frontier Forge Institute. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // AUTO-SAVE FORM DATA
+        (function() {
+            const appForm = document.getElementById('applicationForm');
+            if (!appForm) return;
+
+            const STORAGE_KEY = 'ffi_form_draft';
+            const formInputs = appForm.querySelectorAll('input, select, textarea');
+
+            // Load saved data on page load
+            try {
+                const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+                formInputs.forEach(input => {
+                    if (!input.name) return;
+                    if (input.type === 'checkbox') {
+                        input.checked = savedData[input.name] === true;
+                    } else if (savedData[input.name] !== undefined) {
+                        input.value = savedData[input.name];
+                    }
+                });
+            } catch(e) {
+                console.log('Could not load saved form data');
+            }
+
+            // Save function
+            function saveFormData() {
+                try {
+                    const data = {};
+                    formInputs.forEach(input => {
+                        if (!input.name) return;
+                        data[input.name] = input.type === 'checkbox' ? input.checked : input.value;
+                    });
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                } catch(e) {
+                    console.log('Could not save form data');
+                }
+            }
+
+            // Save on input (text fields) and change (selects, checkboxes)
+            formInputs.forEach(input => {
+                input.addEventListener('input', saveFormData);
+                input.addEventListener('change', saveFormData);
+            });
+
+            // Clear draft after successful submission
+            appForm.addEventListener('submit', () => {
+                localStorage.removeItem(STORAGE_KEY);
+            });
+        })();
+
+        document.getElementById('applicationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.querySelector('.submit-btn');
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            data.ack_interview = document.getElementById('ack_interview').checked;
+            data.ack_deposit = document.getElementById('ack_deposit').checked;
+            data.ack_accurate = document.getElementById('ack_accurate').checked;
+            data.submitted_at = new Date().toISOString();
+
+            try {
+                const response = await fetch('/api/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+                if (response.ok) {
+                    document.getElementById('applicationForm').style.display = 'none';
+                    document.getElementById('confirmation').classList.add('show');
+                    document.querySelector('.back-link').style.display = 'none';
+                    setTimeout(() => {
+                        window.location.href = 'https://calendly.com/holtocw/forge-30min-interview';
+                    }, 3000);
+                } else {
+                    throw new Error('Failed');
+                }
+            } catch (error) {
+                alert('Error. Please try again.');
+                btn.disabled = false;
+                btn.textContent = 'Submit & Pay $250';
+            }
+        });
+    </script>
+</body>
+</html>
