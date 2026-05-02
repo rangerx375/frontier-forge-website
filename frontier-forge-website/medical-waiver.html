@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Release & Waiver | Frontier Forge Institute</title>
+    <meta name="description" content="Medical release, treatment authorization, and liability waiver for Frontier Forge Institute campers.">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { width: 100%; max-width: 100%; overflow-x: hidden; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 16px; line-height: 1.6; color: #1a1a1a; background: #f5f2ed; }
+        img { max-width: 100%; height: auto; display: block; }
+        a { color: #8b4513; text-decoration: none; }
+        a:hover { color: #b87333; }
+        h1, h2, h3 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase; }
+
+        .main-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10, 10, 10, 0.95); padding: 12px 16px; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo img { height: 45px; width: auto; background: #f5f2ed; border-radius: 50%; padding: 2px; }
+        .nav-links { display: none; }
+
+        .apply-page { padding-top: 70px; min-height: 100vh; }
+        .apply-hero { background: #1a1a1a; padding: 24px 16px; text-align: center; color: #e8e4e0; }
+        .apply-hero h1 { color: #fff; font-size: 24px; margin-bottom: 8px; }
+        .apply-hero > p { font-size: 14px; max-width: 100%; }
+
+        .application-section { padding: 20px 12px; }
+        .form-container { background: #fff; padding: 16px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .back-link { display: inline-block; font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.1em; margin-bottom: 16px; }
+
+        .intro-box { background: #faf6ee; border-left: 3px solid #b87333; padding: 16px; border-radius: 8px; margin-bottom: 24px; font-size: 13px; }
+        .intro-box strong { color: #1e3a2f; }
+
+        .form-section { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #e0e0e0; }
+        .form-section:last-of-type { border-bottom: none; }
+        .form-section-title { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.1em; color: #1e3a2f; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .form-section-title::before { content: ''; width: 3px; height: 18px; background: linear-gradient(180deg, #ff4400, #ffaa00); border-radius: 2px; flex-shrink: 0; }
+        .form-section-subtitle { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.08em; color: #1e3a2f; margin: 16px 0 8px; }
+        .form-section p.helper { font-size: 13px; color: #6a6a6a; margin-bottom: 12px; }
+
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; color: #1a1a1a; }
+        .required { color: #8b4513; }
+        .form-group input, .form-group select, .form-group textarea { display: block; width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-family: inherit; font-size: 16px; background: #fafafa; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #b87333; background: #fff; }
+        .form-group textarea { min-height: 70px; resize: vertical; }
+        .form-group small { display: block; font-size: 11px; color: #6a6a6a; margin-top: 4px; }
+
+        /* DYNAMIC ROW TABLES */
+        .row-table { margin-bottom: 8px; }
+        .row-card { background: #fafafa; border: 1px solid #e0e0e0; border-radius: 8px; padding: 12px; margin-bottom: 8px; position: relative; }
+        .row-card .remove-row { position: absolute; top: 8px; right: 8px; background: transparent; border: none; color: #8b4513; cursor: pointer; font-size: 12px; }
+        .row-card .form-group:last-child { margin-bottom: 0; }
+        .add-row-btn { background: #1e3a2f; color: #fff; border: none; padding: 10px 14px; border-radius: 8px; font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.08em; cursor: pointer; }
+        .add-row-btn:hover { background: #2d5a47; }
+
+        /* CHECKBOXES */
+        .checkbox-group { display: block; width: 100%; background: #f8f8f8; padding: 12px; border-radius: 8px; margin-bottom: 8px; box-sizing: border-box; }
+        .checkbox-group input[type="checkbox"] { float: left; width: 20px; height: 20px; margin-right: 10px; margin-top: 2px; accent-color: #8b4513; }
+        .checkbox-group label { display: block; overflow: hidden; font-size: 12px; font-weight: 400; line-height: 1.5; cursor: pointer; margin-bottom: 0; }
+
+        .radio-group { display: block; background: #f8f8f8; padding: 12px; border-radius: 8px; margin-bottom: 8px; }
+        .radio-group input[type="radio"] { width: 20px; height: 20px; margin-right: 10px; vertical-align: middle; accent-color: #8b4513; }
+        .radio-group label { display: inline; font-size: 13px; cursor: pointer; }
+        .radio-group .opt { padding: 4px 0; }
+
+        /* WAIVER LEGAL TEXT */
+        .legal-text { background: #faf6ee; border-left: 3px solid #8b4513; padding: 16px; border-radius: 6px; font-size: 12px; line-height: 1.65; color: #2a2a2a; margin-bottom: 12px; max-height: 280px; overflow-y: auto; }
+        .legal-text strong { color: #1e3a2f; }
+        .legal-text p { margin-bottom: 10px; }
+
+        /* INSURANCE UPLOAD */
+        .upload-card { background: #fafafa; border: 2px dashed #c0c0c0; border-radius: 8px; padding: 16px; text-align: center; margin-bottom: 12px; }
+        .upload-card.has-file { border-style: solid; border-color: #1e3a2f; background: #f0f4f1; }
+        .upload-card label { display: inline-block; background: #1e3a2f; color: #fff; padding: 10px 16px; border-radius: 6px; font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.08em; cursor: pointer; }
+        .upload-card input[type="file"] { display: none; }
+        .upload-card .preview { margin-top: 12px; max-height: 180px; margin-left: auto; margin-right: auto; border-radius: 4px; }
+        .upload-card .upload-status { font-size: 11px; color: #6a6a6a; margin-top: 8px; }
+
+        .signature-box { background: #f8f8f8; border-left: 3px solid #b87333; padding: 16px; border-radius: 8px; }
+        .signature-input { font-family: 'Source Serif 4', Georgia, serif !important; font-style: italic; font-size: 22px !important; padding: 16px !important; }
+
+        .submit-btn { display: block; width: 100%; padding: 16px; background: linear-gradient(135deg, #ff4400, #ff6b00, #ffaa00); color: #fff; font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; }
+        .submit-btn:disabled { background: #999; cursor: not-allowed; }
+        .form-footer { text-align: center; font-size: 11px; color: #6a6a6a; margin-top: 12px; }
+
+        #confirmation { display: none; text-align: center; padding: 20px; }
+        #confirmation.show { display: block; }
+        .checkmark-circle { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 16px; }
+        #confirmation h2 { color: #1e3a2f; font-size: 22px; margin-bottom: 8px; }
+        #confirmation > p { color: #6a6a6a; margin-bottom: 20px; }
+
+        .footer { background: #0a0a0a; color: #9a9a9a; padding: 40px 16px; text-align: center; }
+        .footer-logo { width: 80px; margin: 0 auto 16px; border-radius: 50%; }
+        .tagline { font-family: 'Source Serif 4', Georgia, serif; font-style: italic; color: #b87333; margin-bottom: 4px; font-size: 14px; }
+        .scripture-ref { font-size: 12px; color: #9a9a9a; margin-bottom: 8px; }
+        .motto { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.1em; color: #e8e4e0; margin-bottom: 16px; }
+        .footer-links { font-size: 12px; margin-bottom: 16px; }
+        .footer-links a { color: #9a9a9a; }
+        .footer-links span { color: #4a4a4a; margin: 0 8px; }
+        .copyright { font-size: 12px; }
+
+        @media (min-width: 768px) {
+            .nav-links { display: flex; list-style: none; gap: 24px; align-items: center; }
+            .nav-links a { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.1em; color: #e8e4e0; text-transform: uppercase; }
+            .apply-page { padding-top: 100px; }
+            .apply-hero { padding: 60px 32px; }
+            .apply-hero h1 { font-size: 48px; }
+            .apply-hero > p { font-size: 18px; max-width: 700px; margin: 0 auto; }
+            .application-section { padding: 60px 32px; }
+            .form-container { max-width: 800px; margin: 0 auto; padding: 48px; border-radius: 20px; }
+            .form-section-title { font-size: 20px; }
+            .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+            .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+            .checkbox-group label { font-size: 14px; }
+            .submit-btn { font-size: 20px; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><img src="assets/logo.png" alt="Frontier Forge Institute"></a>
+            <ul class="nav-links">
+                <li><a href="index.html#mission">Mission</a></li>
+                <li><a href="index.html#course">The Course</a></li>
+                <li><a href="index.html#schedule">Schedule</a></li>
+                <li><a href="index.html#founder">Founder</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="apply-page">
+        <section class="apply-hero">
+            <h1>Medical Release & Waiver</h1>
+            <p>Combined parent / legal guardian packet. Please read every section, complete every field, and sign at the bottom.</p>
+        </section>
+
+        <section class="application-section">
+            <div class="form-container">
+                <a href="index.html" class="back-link">← Back to Home</a>
+
+                <div class="intro-box">
+                    <strong>Before you begin.</strong> This packet replaces the printed PDF. It takes about 15 minutes. Have your son's insurance card handy — you'll be asked to take a photo of the front and back. Your form auto-saves in this browser as you go, so you can step away and come back. The completed form is emailed directly to camp leadership and is <strong>not stored on any website or database.</strong>
+                </div>
+
+                <form id="waiverForm">
+                    <!-- SECTION 1 -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">Section 1 — Camper & Parent Information</h2>
+
+                        <h3 class="form-section-subtitle">Camper</h3>
+                        <div class="form-group">
+                            <label>Camper full legal name <span class="required">*</span></label>
+                            <input type="text" name="camper_name" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Date of birth <span class="required">*</span></label>
+                                <input type="date" name="camper_dob" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Age at start of camp <span class="required">*</span></label>
+                                <input type="number" name="camper_age" min="10" max="20" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Home street address <span class="required">*</span></label>
+                            <input type="text" name="address_street" required>
+                        </div>
+                        <div class="form-row-3">
+                            <div class="form-group">
+                                <label>City <span class="required">*</span></label>
+                                <input type="text" name="address_city" required>
+                            </div>
+                            <div class="form-group">
+                                <label>State <span class="required">*</span></label>
+                                <input type="text" name="address_state" required>
+                            </div>
+                            <div class="form-group">
+                                <label>ZIP <span class="required">*</span></label>
+                                <input type="text" name="address_zip" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Height</label>
+                                <input type="text" name="camper_height" placeholder="e.g. 5'8&quot;">
+                            </div>
+                            <div class="form-group">
+                                <label>Weight</label>
+                                <input type="text" name="camper_weight" placeholder="e.g. 140 lb">
+                            </div>
+                        </div>
+
+                        <h3 class="form-section-subtitle">Primary Parent / Legal Guardian</h3>
+                        <div class="form-group">
+                            <label>Full name <span class="required">*</span></label>
+                            <input type="text" name="parent_name" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Relationship to camper <span class="required">*</span></label>
+                                <input type="text" name="parent_relationship" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Cell phone <span class="required">*</span></label>
+                                <input type="tel" name="parent_cell" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Home phone</label>
+                                <input type="tel" name="parent_home">
+                            </div>
+                            <div class="form-group">
+                                <label>Work phone</label>
+                                <input type="tel" name="parent_work">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email address <span class="required">*</span></label>
+                            <input type="email" name="parent_email" required>
+                        </div>
+
+                        <h3 class="form-section-subtitle">Secondary Emergency Contact</h3>
+                        <div class="form-group">
+                            <label>Full name <span class="required">*</span></label>
+                            <input type="text" name="emergency_name" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Relationship to camper <span class="required">*</span></label>
+                                <input type="text" name="emergency_relationship" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Cell phone <span class="required">*</span></label>
+                                <input type="tel" name="emergency_cell" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email address</label>
+                            <input type="email" name="emergency_email">
+                        </div>
+
+                        <h3 class="form-section-subtitle">Healthcare Providers & Insurance</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Family physician</label>
+                                <input type="text" name="physician_name">
+                            </div>
+                            <div class="form-group">
+                                <label>Physician phone</label>
+                                <input type="tel" name="physician_phone">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Dentist</label>
+                                <input type="text" name="dentist_name">
+                            </div>
+                            <div class="form-group">
+                                <label>Dentist phone</label>
+                                <input type="tel" name="dentist_phone">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Insurance carrier <span class="required">*</span></label>
+                            <input type="text" name="insurance_carrier" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Policy / Member number <span class="required">*</span></label>
+                                <input type="text" name="insurance_policy" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Group number</label>
+                                <input type="text" name="insurance_group">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Preferred hospital (if known)</label>
+                            <input type="text" name="preferred_hospital">
+                        </div>
+
+                        <h3 class="form-section-subtitle">Insurance Card Photos</h3>
+                        <p class="helper">Take a clear photo of the front and back of your son's insurance card. Photos are embedded in the PDF that's emailed to camp leadership and are not stored anywhere else.</p>
+
+                        <div class="upload-card" id="frontCard">
+                            <label for="insurance_front_input">Upload Front of Card</label>
+                            <input type="file" id="insurance_front_input" accept="image/*" capture="environment">
+                            <img class="preview" id="frontPreview" style="display:none;">
+                            <div class="upload-status" id="frontStatus">No file chosen</div>
+                        </div>
+                        <div class="upload-card" id="backCard">
+                            <label for="insurance_back_input">Upload Back of Card</label>
+                            <input type="file" id="insurance_back_input" accept="image/*" capture="environment">
+                            <img class="preview" id="backPreview" style="display:none;">
+                            <div class="upload-status" id="backStatus">No file chosen</div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 2 -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">Section 2 — Medical History</h2>
+
+                        <h3 class="form-section-subtitle">Allergies</h3>
+                        <p class="helper">List ALL allergies (food, medication, environmental, insect). If none, leave empty and we'll record "NONE".</p>
+                        <div class="row-table" id="allergiesTable"></div>
+                        <button type="button" class="add-row-btn" onclick="addAllergy()">+ Add allergy</button>
+
+                        <h3 class="form-section-subtitle">Chronic / Ongoing Conditions</h3>
+                        <p class="helper">Asthma, diabetes, ADHD, anxiety, recent injuries, etc. Leave empty if none.</p>
+                        <div class="row-table" id="conditionsTable"></div>
+                        <button type="button" class="add-row-btn" onclick="addCondition()">+ Add condition</button>
+
+                        <h3 class="form-section-subtitle">Immunizations & Physicals</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Date of last tetanus immunization</label>
+                                <input type="text" name="tetanus_date" placeholder="MM/YYYY or 'unknown'">
+                            </div>
+                            <div class="form-group">
+                                <label>Date of last physical exam</label>
+                                <input type="text" name="physical_date" placeholder="MM/YYYY">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Are immunizations up to date?</label>
+                            <select name="immunizations_current">
+                                <option value="">Select...</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                                <option value="Unsure">Unsure</option>
+                            </select>
+                        </div>
+
+                        <h3 class="form-section-subtitle">Dietary Restrictions / Preferences</h3>
+                        <p class="helper">Note: camp menu includes pork in some meals — flag kosher / halal here.</p>
+                        <div class="row-table" id="dietTable"></div>
+                        <button type="button" class="add-row-btn" onclick="addDiet()">+ Add restriction</button>
+
+                        <div class="form-group" style="margin-top:20px;">
+                            <label>Other medical history / notes</label>
+                            <textarea name="medical_notes" placeholder="Recent hospitalizations, history of fainting, heat-related illness, sleepwalking, bedwetting, etc."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 3 -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">Section 3 — Activity Acknowledgment</h2>
+                        <p class="helper">Check each activity to consent to your son's participation. Uncheck any you wish to exclude him from, and explain in the notes below.</p>
+
+                        <div class="checkbox-group"><input type="checkbox" id="act_hike" name="act_hike"><label for="act_hike">Hiking, land navigation, and an overnight movement carrying personal gear (Day 6).</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="act_water" name="act_water"><label for="act_water">Water activities at the camp pond, including swimming and water rescue training.</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="act_construction" name="act_construction"><label for="act_construction">Light construction work involving hand tools and limited use of power tools under cadre supervision.</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="act_firearms" name="act_firearms"><label for="act_firearms">Firearms safety training using inert weapons, then range instruction with 9mm pistols under a certified Range Safety Officer (one instructor per student on the line).</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="act_rappel" name="act_rappel"><label for="act_rappel">High-angle rappelling, conducted by the Appalachian Bible College Outdoors team under their own instructors and safety protocols.</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="act_firstaid" name="act_firstaid"><label for="act_firstaid">First aid training, including bleeding control, tourniquet application, and casualty drag practice.</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="act_pt" name="act_pt"><label for="act_pt">Daily physical training, including running, calisthenics, ruck marches, and physical conditioning appropriate for adolescent males.</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="act_blades" name="act_blades"><label for="act_blades">Use of pocket knife, fixed blade, multi-tool, or splitting maul under cadre supervision.</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="act_camping" name="act_camping"><label for="act_camping">Camping in tents on cots, daily outdoor living, and exposure to insects, ticks, weather, and natural hazards typical of the southern West Virginia mountains.</label></div>
+
+                        <div class="form-group" style="margin-top:16px;">
+                            <label>Activity restrictions or concerns</label>
+                            <textarea name="activity_notes" placeholder="If excluding any activity above, explain here."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 4 -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">Section 4 — Authorization to Treat</h2>
+                        <div class="legal-text">
+                            <p>I, the undersigned parent or legal guardian of the camper named in Section 1, authorize the Frontier Forge Institute ("FFI"), its staff, the camp's on-site Registered Nurse or medic, and any consulting physician, dentist, hospital, or emergency medical services personnel to provide such routine first aid, medical treatment, dental treatment, surgical treatment, hospital care, and transportation as may be deemed necessary for the health and well-being of the camper during the period of the camp.</p>
+                            <p><strong>FFI will make reasonable efforts to contact me before any non-emergency treatment is rendered</strong>, but in a true medical emergency, treatment may proceed without prior contact if delay would jeopardize the camper's health. I authorize the release of medical records and information necessary for treatment.</p>
+                            <p>I understand and accept that I am financially responsible for any medical, dental, hospital, ambulance, or other healthcare expenses incurred on behalf of the camper, including any expenses not covered by my insurance. FFI is not responsible for these costs.</p>
+                            <p><strong>On-site medical authority.</strong> The camp will have a Registered Nurse or qualified medic on-site full-time during the program. The on-site medical authority will assess all injuries and illnesses, administer medications per Section 5, and determine when off-site medical evaluation is required.</p>
+                        </div>
+                        <div class="checkbox-group"><input type="checkbox" id="ack_treat" name="ack_treat" required><label for="ack_treat">I have read and agree to the authorization to treat above. <span class="required">*</span></label></div>
+                    </div>
+
+                    <!-- SECTION 5 -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">Section 5 — Medication Authorization</h2>
+
+                        <h3 class="form-section-subtitle">Medications brought from home</h3>
+                        <p class="helper">List EVERY medication: prescriptions, daily over-the-counter meds, vitamins, supplements. All must arrive in original containers with the pharmacy label intact.</p>
+                        <div class="row-table" id="medsTable"></div>
+                        <button type="button" class="add-row-btn" onclick="addMedication()">+ Add medication</button>
+
+                        <h3 class="form-section-subtitle">Self-administration</h3>
+                        <div class="radio-group">
+                            <div class="opt"><input type="radio" id="self_admin_yes" name="self_admin" value="self"><label for="self_admin_yes">My son is competent and authorized to self-administer his own prescription medications under medical staff supervision.</label></div>
+                            <div class="opt"><input type="radio" id="self_admin_no" name="self_admin" value="staff"><label for="self_admin_no">My son requires medical staff to administer all medications. Staff will hold all medications in the locked camp medical area.</label></div>
+                        </div>
+
+                        <h3 class="form-section-subtitle">Over-the-counter medication authorization</h3>
+                        <p class="helper">Check the OTC medications you authorize the camp medical staff to administer in standard age-appropriate doses, without contacting you for each individual dose. Every dose will be documented.</p>
+                        <div class="checkbox-group"><input type="checkbox" id="otc_acetaminophen" name="otc_acetaminophen"><label for="otc_acetaminophen">Acetaminophen (Tylenol) — pain, headache, fever</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="otc_ibuprofen" name="otc_ibuprofen"><label for="otc_ibuprofen">Ibuprofen (Advil, Motrin) — pain, inflammation, fever</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="otc_benadryl" name="otc_benadryl"><label for="otc_benadryl">Diphenhydramine (Benadryl) — allergic reactions, insect stings</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="otc_loratadine" name="otc_loratadine"><label for="otc_loratadine">Loratadine (Claritin) / non-drowsy antihistamine — seasonal allergies</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="otc_pepto" name="otc_pepto"><label for="otc_pepto">Bismuth subsalicylate (Pepto-Bismol) / loperamide (Imodium) — stomach, diarrhea</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="otc_antacid" name="otc_antacid"><label for="otc_antacid">Antacid (Tums, Rolaids) — indigestion</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="otc_hydrocortisone" name="otc_hydrocortisone"><label for="otc_hydrocortisone">Hydrocortisone cream 1% — insect bites, rashes, irritation</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="otc_neosporin" name="otc_neosporin"><label for="otc_neosporin">Antibiotic ointment (Neosporin) — minor cuts and abrasions</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="otc_sunscreen" name="otc_sunscreen"><label for="otc_sunscreen">Sunscreen and aloe vera gel — sun protection and sunburn</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="otc_eyedrops" name="otc_eyedrops"><label for="otc_eyedrops">Saline eye drops / contact lens rewetting drops</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="otc_lozenges" name="otc_lozenges"><label for="otc_lozenges">Cough drops / throat lozenges</label></div>
+
+                        <div class="form-group" style="margin-top:16px;">
+                            <label>Medications NOT authorized (write NONE if all above are OK)</label>
+                            <textarea name="med_restrictions" placeholder="Any restrictions on the medications above"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 6 -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">Section 6 — Communications & Privacy</h2>
+
+                        <h3 class="form-section-subtitle">Routine communication preferences</h3>
+                        <p class="helper">In a non-emergency, how would you prefer the camp to reach you? (Check all that work.)</p>
+                        <div class="checkbox-group"><input type="checkbox" id="comm_phone" name="comm_phone"><label for="comm_phone">Phone call to primary parent / guardian</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="comm_text" name="comm_text"><label for="comm_text">Text message to primary parent / guardian</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="comm_whatsapp" name="comm_whatsapp"><label for="comm_whatsapp">Camp WhatsApp group</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="comm_email" name="comm_email"><label for="comm_email">Email</label></div>
+
+                        <h3 class="form-section-subtitle">Authorized to discuss medical matters</h3>
+                        <p class="helper">Anyone other than yourself the camp may share medical information with (other parent, stepparent, pastor, etc.). Leave empty if none.</p>
+                        <div class="row-table" id="contactsTable"></div>
+                        <button type="button" class="add-row-btn" onclick="addContact()">+ Add person</button>
+                    </div>
+
+                    <!-- SECTION 7 -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">Section 7 — Risk & Liability Waiver</h2>
+                        <p class="helper" style="background:#7a1f1f; color:#fff; padding:10px; border-radius:6px; font-weight:500;">THIS IS A LEGAL DOCUMENT — READ CAREFULLY BEFORE SIGNING.</p>
+
+                        <div class="legal-text">
+                            <p><strong>Acknowledgment of inherent risks.</strong> I understand and acknowledge that participation in the Frontier Forge Institute program involves inherent risks of physical injury, illness, property damage, and in extreme cases, permanent disability or death. These risks include, but are not limited to: slips, trips, and falls on uneven terrain; cuts, abrasions, sprains, fractures, and other orthopedic injuries; injuries from tools, ropes, firearms, or other equipment; drowning or near-drowning; insect stings, tick bites, and exposure to vector-borne illness; allergic reactions; heat-related illness, hypothermia, or weather-related injury; and the negligent acts of other participants. I acknowledge that these risks cannot be eliminated regardless of the care taken to avoid injury.</p>
+                            <p><strong>Voluntary participation.</strong> I confirm that my son's participation in this program is entirely voluntary, that he is in suitable physical and mental condition to participate, and that I have informed him of the nature of these activities. I understand he may be removed from the program for safety, behavioral, or medical reasons at the sole discretion of FFI leadership.</p>
+                            <p><strong>Release and waiver.</strong> In consideration of my son's acceptance into the program, I, on behalf of myself, my son, and our heirs, executors, administrators, and assigns, hereby <strong>RELEASE, WAIVE, DISCHARGE, AND COVENANT NOT TO SUE</strong> Frontier Forge Institute, its directors, officers, employees, volunteers, cadre, instructors, agents, contractors (including but not limited to Appalachian Bible College and the Appalachian Bible College Outdoors team), property owners, lessors (including Alpine Ministries), and all other persons or entities acting on FFI's behalf (collectively, the "Released Parties"), from any and all liability, claims, demands, actions, and causes of action whatsoever arising out of or related to any loss, damage, illness, or injury, including death, that may be sustained by my son or by any property belonging to him while participating in the program.</p>
+                            <p><strong>Indemnification.</strong> I further agree to <strong>INDEMNIFY AND HOLD HARMLESS</strong> the Released Parties from any loss, liability, damage, or costs (including attorney's fees) they may incur due to my son's participation in the program, whether caused by the negligence of the Released Parties or otherwise, to the maximum extent permitted by West Virginia law.</p>
+                            <p><strong>Severability and governing law.</strong> If any provision of this packet is found unenforceable, the remaining provisions remain in full force. This packet is governed by the laws of the State of West Virginia.</p>
+                        </div>
+
+                        <div class="checkbox-group"><input type="checkbox" id="ack_risk" name="ack_risk" required><label for="ack_risk">I have read and acknowledge the inherent risks of the program. <span class="required">*</span></label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="ack_release" name="ack_release" required><label for="ack_release">I agree to the release, waiver, and indemnification above. <span class="required">*</span></label></div>
+
+                        <h3 class="form-section-subtitle">Photo / likeness release</h3>
+                        <p class="helper">FFI may photograph campers and use those photos (without identification by name) in promotional materials, on the FFI website, and in social media.</p>
+                        <div class="radio-group">
+                            <div class="opt"><input type="radio" id="photo_consent" name="photo_release" value="consent" checked><label for="photo_consent">I consent to the photo / likeness release.</label></div>
+                            <div class="opt"><input type="radio" id="photo_optout" name="photo_release" value="opt_out"><label for="photo_optout">I do NOT consent — please do not use my son's photos in promotional materials.</label></div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 8 -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">Section 8 — Signature</h2>
+                        <p class="helper">Type your full legal name below. By typing your name and submitting, you are signing this document electronically with the same legal force as a handwritten signature.</p>
+
+                        <div class="signature-box">
+                            <div class="form-group">
+                                <label>Typed signature (full legal name) <span class="required">*</span></label>
+                                <input type="text" name="signature_typed" class="signature-input" placeholder="Your full legal name" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Printed name <span class="required">*</span></label>
+                                    <input type="text" name="signature_printed_name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Relationship to camper <span class="required">*</span></label>
+                                    <input type="text" name="signature_relationship" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Date <span class="required">*</span></label>
+                                <input type="date" name="signature_date" required>
+                            </div>
+                        </div>
+
+                        <p class="helper" style="margin-top:12px;">A witness signature will be collected wet-ink at Day 1 registration.</p>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">Submit Medical Waiver</button>
+                    <p class="form-footer">Your form will be emailed to camp leadership. Nothing is stored on a website.</p>
+                </form>
+
+                <div id="confirmation">
+                    <div class="checkmark-circle">✓</div>
+                    <h2>Waiver Submitted</h2>
+                    <p>Thank you. Your son's medical waiver has been emailed to camp leadership. You may close this page.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <img src="assets/logo.png" alt="Frontier Forge Institute" class="footer-logo">
+        <p class="tagline">"Be watchful, stand firm in the faith, act like men, be strong."</p>
+        <p class="scripture-ref">— 1 Corinthians 16:13</p>
+        <p class="motto">Forging Leaders of Tomorrow</p>
+        <div class="footer-links">
+            <a href="privacy.html">Privacy Policy</a>
+            <span>|</span>
+            <a href="terms.html">Terms of Service</a>
+        </div>
+        <p class="copyright">© 2025 Frontier Forge Institute. All rights reserved.</p>
+    </footer>
+
+    <script>
+    (function() {
+        const STORAGE_KEY = 'ffi_waiver_draft_v1';
+        const form = document.getElementById('waiverForm');
+
+        // ===== DYNAMIC ROW BUILDERS =====
+        function makeRow(tableId, fields) {
+            const wrap = document.createElement('div');
+            wrap.className = 'row-card';
+            const remove = document.createElement('button');
+            remove.type = 'button';
+            remove.className = 'remove-row';
+            remove.textContent = '✕ Remove';
+            remove.onclick = () => { wrap.remove(); saveDraft(); };
+            wrap.appendChild(remove);
+            for (const f of fields) {
+                const g = document.createElement('div');
+                g.className = 'form-group';
+                const lbl = document.createElement('label');
+                lbl.textContent = f.label;
+                g.appendChild(lbl);
+                const inp = document.createElement(f.textarea ? 'textarea' : 'input');
+                if (!f.textarea) inp.type = f.type || 'text';
+                inp.dataset.rowField = f.key;
+                if (f.placeholder) inp.placeholder = f.placeholder;
+                inp.addEventListener('input', saveDraft);
+                g.appendChild(inp);
+                wrap.appendChild(g);
+            }
+            document.getElementById(tableId).appendChild(wrap);
+            return wrap;
+        }
+
+        window.addAllergy = () => makeRow('allergiesTable', [
+            { key: 'allergen', label: 'Allergen' },
+            { key: 'reaction', label: 'Typical reaction' },
+            { key: 'severity', label: 'Severity (mild / moderate / severe / anaphylactic)' },
+            { key: 'treatment', label: 'Treatment' }
+        ]);
+        window.addCondition = () => makeRow('conditionsTable', [
+            { key: 'condition', label: 'Condition' },
+            { key: 'diagnosed', label: 'When diagnosed' },
+            { key: 'treatment', label: 'Current treatment / management', textarea: true }
+        ]);
+        window.addDiet = () => makeRow('dietTable', [
+            { key: 'restriction', label: 'Restriction or preference' },
+            { key: 'reason', label: 'Reason (medical, religious, other)' }
+        ]);
+        window.addMedication = () => makeRow('medsTable', [
+            { key: 'name', label: 'Medication name' },
+            { key: 'dose', label: 'Dose' },
+            { key: 'times', label: 'Times per day' },
+            { key: 'reason', label: 'Reason / condition' }
+        ]);
+        window.addContact = () => makeRow('contactsTable', [
+            { key: 'name', label: 'Name' },
+            { key: 'relationship', label: 'Relationship to camper' },
+            { key: 'phone', label: 'Phone', type: 'tel' }
+        ]);
+
+        function collectRows(tableId, keys) {
+            const cards = document.querySelectorAll('#' + tableId + ' .row-card');
+            const rows = [];
+            cards.forEach(card => {
+                const row = {};
+                let any = false;
+                keys.forEach(k => {
+                    const inp = card.querySelector('[data-row-field="' + k + '"]');
+                    const val = inp ? inp.value.trim() : '';
+                    if (val) any = true;
+                    row[k] = val;
+                });
+                if (any) rows.push(row);
+            });
+            return rows;
+        }
+
+        function rowsState() {
+            return {
+                allergies: collectRows('allergiesTable', ['allergen', 'reaction', 'severity', 'treatment']),
+                conditions: collectRows('conditionsTable', ['condition', 'diagnosed', 'treatment']),
+                diet: collectRows('dietTable', ['restriction', 'reason']),
+                medications: collectRows('medsTable', ['name', 'dose', 'times', 'reason']),
+                authorized_contacts: collectRows('contactsTable', ['name', 'relationship', 'phone'])
+            };
+        }
+
+        // ===== INSURANCE CARD UPLOAD WITH RESIZE =====
+        async function handleUpload(inputId, previewId, statusId, cardId, dataKey) {
+            const inp = document.getElementById(inputId);
+            inp.addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                document.getElementById(statusId).textContent = 'Processing...';
+                try {
+                    const dataUrl = await resizeImage(file, 1500, 0.85);
+                    document.getElementById(previewId).src = dataUrl;
+                    document.getElementById(previewId).style.display = 'block';
+                    document.getElementById(cardId).classList.add('has-file');
+                    document.getElementById(statusId).textContent = file.name + ' — ' + Math.round(dataUrl.length / 1024) + ' KB';
+                    window['_' + dataKey] = dataUrl;
+                    saveDraft();
+                } catch (err) {
+                    document.getElementById(statusId).textContent = 'Could not process image — please try a different photo.';
+                }
+            });
+        }
+
+        function resizeImage(file, maxDim, quality) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                const reader = new FileReader();
+                reader.onload = () => { img.src = reader.result; };
+                reader.onerror = reject;
+                img.onload = () => {
+                    let { width, height } = img;
+                    const scale = Math.min(1, maxDim / Math.max(width, height));
+                    width = Math.round(width * scale);
+                    height = Math.round(height * scale);
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width; canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.fillStyle = '#fff';
+                    ctx.fillRect(0, 0, width, height);
+                    ctx.drawImage(img, 0, 0, width, height);
+                    resolve(canvas.toDataURL('image/jpeg', quality));
+                };
+                img.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        handleUpload('insurance_front_input', 'frontPreview', 'frontStatus', 'frontCard', 'insurance_card_front');
+        handleUpload('insurance_back_input', 'backPreview', 'backStatus', 'backCard', 'insurance_card_back');
+
+        // ===== AUTO-SAVE =====
+        function snapshot() {
+            const data = {};
+            const inputs = form.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                if (!input.name) return;
+                if (input.type === 'checkbox') data[input.name] = input.checked;
+                else if (input.type === 'radio') { if (input.checked) data[input.name] = input.value; }
+                else data[input.name] = input.value;
+            });
+            data._rows = rowsState();
+            data._front = window._insurance_card_front || '';
+            data._back = window._insurance_card_back || '';
+            return data;
+        }
+
+        function saveDraft() {
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot())); } catch(e) {}
+        }
+
+        function loadDraft() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return;
+                const data = JSON.parse(raw);
+                const inputs = form.querySelectorAll('input, select, textarea');
+                inputs.forEach(input => {
+                    if (!input.name) return;
+                    if (input.type === 'checkbox') input.checked = data[input.name] === true;
+                    else if (input.type === 'radio') { if (data[input.name] === input.value) input.checked = true; }
+                    else if (data[input.name] !== undefined) input.value = data[input.name];
+                });
+                if (data._rows) {
+                    const buildBack = (rows, addFn, keys) => {
+                        for (const row of rows || []) {
+                            const card = addFn();
+                            keys.forEach(k => {
+                                const inp = card.querySelector('[data-row-field="' + k + '"]');
+                                if (inp && row[k]) inp.value = row[k];
+                            });
+                        }
+                    };
+                    buildBack(data._rows.allergies, window.addAllergy, ['allergen', 'reaction', 'severity', 'treatment']);
+                    buildBack(data._rows.conditions, window.addCondition, ['condition', 'diagnosed', 'treatment']);
+                    buildBack(data._rows.diet, window.addDiet, ['restriction', 'reason']);
+                    buildBack(data._rows.medications, window.addMedication, ['name', 'dose', 'times', 'reason']);
+                    buildBack(data._rows.authorized_contacts, window.addContact, ['name', 'relationship', 'phone']);
+                }
+                if (data._front) {
+                    window._insurance_card_front = data._front;
+                    document.getElementById('frontPreview').src = data._front;
+                    document.getElementById('frontPreview').style.display = 'block';
+                    document.getElementById('frontCard').classList.add('has-file');
+                    document.getElementById('frontStatus').textContent = 'Restored from draft — ' + Math.round(data._front.length / 1024) + ' KB';
+                }
+                if (data._back) {
+                    window._insurance_card_back = data._back;
+                    document.getElementById('backPreview').src = data._back;
+                    document.getElementById('backPreview').style.display = 'block';
+                    document.getElementById('backCard').classList.add('has-file');
+                    document.getElementById('backStatus').textContent = 'Restored from draft — ' + Math.round(data._back.length / 1024) + ' KB';
+                }
+            } catch(e) {}
+        }
+
+        loadDraft();
+        form.addEventListener('input', saveDraft);
+        form.addEventListener('change', saveDraft);
+
+        // ===== SUBMIT =====
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+
+            const payload = {};
+            const inputs = form.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                if (!input.name) return;
+                if (input.type === 'checkbox') payload[input.name] = input.checked;
+                else if (input.type === 'radio') { if (input.checked) payload[input.name] = input.value; }
+                else payload[input.name] = input.value;
+            });
+            const rows = rowsState();
+            Object.assign(payload, rows);
+            payload.insurance_card_front = window._insurance_card_front || '';
+            payload.insurance_card_back = window._insurance_card_back || '';
+            payload.submitted_at_display = new Date().toLocaleString('en-US');
+
+            try {
+                const res = await fetch('/api/submit-medical-waiver', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) throw new Error('Server error');
+                localStorage.removeItem(STORAGE_KEY);
+                form.style.display = 'none';
+                document.querySelector('.intro-box').style.display = 'none';
+                document.querySelector('.back-link').style.display = 'none';
+                document.getElementById('confirmation').classList.add('show');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch (err) {
+                alert('Sorry — submission failed. Please try again, or email the camp coordinator directly.');
+                btn.disabled = false;
+                btn.textContent = 'Submit Medical Waiver';
+            }
+        });
+
+        // Set default date on signature
+        const sigDate = form.querySelector('input[name="signature_date"]');
+        if (sigDate && !sigDate.value) sigDate.valueAsDate = new Date();
+    })();
+    </script>
+</body>
+</html>
