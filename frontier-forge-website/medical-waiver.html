@@ -160,7 +160,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Date of birth <span class="required">*</span></label>
-                                <input type="date" name="camper_dob" required>
+                                <input type="text" inputmode="numeric" name="camper_dob" placeholder="MM/DD/YYYY" maxlength="10" data-format="date-mdy" pattern="\d{2}/\d{2}/\d{4}" required>
                             </div>
                             <div class="form-group">
                                 <label>Age at start of camp <span class="required">*</span></label>
@@ -208,17 +208,17 @@
                             </div>
                             <div class="form-group">
                                 <label>Cell phone <span class="required">*</span></label>
-                                <input type="tel" name="parent_cell" required>
+                                <input type="tel" name="parent_cell" placeholder="(555) 123-4567" maxlength="14" data-format="phone" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Home phone</label>
-                                <input type="tel" name="parent_home">
+                                <input type="tel" name="parent_home" placeholder="(555) 123-4567" maxlength="14" data-format="phone">
                             </div>
                             <div class="form-group">
                                 <label>Work phone</label>
-                                <input type="tel" name="parent_work">
+                                <input type="tel" name="parent_work" placeholder="(555) 123-4567" maxlength="14" data-format="phone">
                             </div>
                         </div>
                         <div class="form-group">
@@ -238,7 +238,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Cell phone <span class="required">*</span></label>
-                                <input type="tel" name="emergency_cell" required>
+                                <input type="tel" name="emergency_cell" placeholder="(555) 123-4567" maxlength="14" data-format="phone" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -254,7 +254,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Physician phone</label>
-                                <input type="tel" name="physician_phone">
+                                <input type="tel" name="physician_phone" placeholder="(555) 123-4567" maxlength="14" data-format="phone">
                             </div>
                         </div>
                         <div class="form-row">
@@ -264,7 +264,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Dentist phone</label>
-                                <input type="tel" name="dentist_phone">
+                                <input type="tel" name="dentist_phone" placeholder="(555) 123-4567" maxlength="14" data-format="phone">
                             </div>
                         </div>
                         <div class="form-group">
@@ -321,11 +321,12 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Date of last tetanus immunization</label>
-                                <input type="text" name="tetanus_date" placeholder="MM/YYYY or 'unknown'">
+                                <input type="text" inputmode="numeric" name="tetanus_date" placeholder="MM/YYYY" maxlength="7" data-format="date-my">
+                                <small>Leave blank if unknown.</small>
                             </div>
                             <div class="form-group">
                                 <label>Date of last physical exam</label>
-                                <input type="text" name="physical_date" placeholder="MM/YYYY">
+                                <input type="text" inputmode="numeric" name="physical_date" placeholder="MM/YYYY" maxlength="7" data-format="date-my">
                             </div>
                         </div>
                         <div class="form-group">
@@ -480,7 +481,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Date <span class="required">*</span></label>
-                                <input type="date" name="signature_date" required>
+                                <input type="text" inputmode="numeric" name="signature_date" placeholder="MM/DD/YYYY" maxlength="10" data-format="date-mdy" pattern="\d{2}/\d{2}/\d{4}" required>
                             </div>
                         </div>
 
@@ -515,8 +516,48 @@
 
     <script>
     (function() {
-        const STORAGE_KEY = 'ffi_waiver_draft_v1';
+        const STORAGE_KEY = 'ffi_waiver_draft_v2';
         const form = document.getElementById('waiverForm');
+
+        // ===== AUTO-FORMATTERS =====
+        function formatPhone(value) {
+            const d = String(value || '').replace(/\D/g, '').slice(0, 10);
+            if (d.length === 0) return '';
+            if (d.length <= 3) return '(' + d;
+            if (d.length <= 6) return '(' + d.slice(0, 3) + ') ' + d.slice(3);
+            return '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6);
+        }
+        function formatDateMDY(value) {
+            const d = String(value || '').replace(/\D/g, '').slice(0, 8);
+            if (d.length === 0) return '';
+            if (d.length <= 2) return d;
+            if (d.length <= 4) return d.slice(0, 2) + '/' + d.slice(2);
+            return d.slice(0, 2) + '/' + d.slice(2, 4) + '/' + d.slice(4);
+        }
+        function formatDateMY(value) {
+            const d = String(value || '').replace(/\D/g, '').slice(0, 6);
+            if (d.length === 0) return '';
+            if (d.length <= 2) return d;
+            return d.slice(0, 2) + '/' + d.slice(2);
+        }
+        function applyFormatter(input, formatter) {
+            input.addEventListener('input', () => {
+                const before = input.value;
+                const after = formatter(before);
+                if (before !== after) input.value = after;
+            });
+            input.addEventListener('blur', () => {
+                input.value = formatter(input.value);
+            });
+        }
+        function attachFormatter(input) {
+            const fmt = input.dataset && input.dataset.format;
+            if (fmt === 'phone') applyFormatter(input, formatPhone);
+            else if (fmt === 'date-mdy') applyFormatter(input, formatDateMDY);
+            else if (fmt === 'date-my') applyFormatter(input, formatDateMY);
+        }
+        // Apply to all static inputs that opted in via data-format
+        document.querySelectorAll('[data-format]').forEach(attachFormatter);
 
         // ===== DYNAMIC ROW BUILDERS =====
         function makeRow(tableId, fields) {
@@ -538,6 +579,11 @@
                 if (!f.textarea) inp.type = f.type || 'text';
                 inp.dataset.rowField = f.key;
                 if (f.placeholder) inp.placeholder = f.placeholder;
+                if (f.format) {
+                    inp.dataset.format = f.format;
+                    if (f.format === 'phone') inp.maxLength = 14;
+                    attachFormatter(inp);
+                }
                 inp.addEventListener('input', saveDraft);
                 g.appendChild(inp);
                 wrap.appendChild(g);
@@ -570,7 +616,7 @@
         window.addContact = () => makeRow('contactsTable', [
             { key: 'name', label: 'Name' },
             { key: 'relationship', label: 'Relationship to camper' },
-            { key: 'phone', label: 'Phone', type: 'tel' }
+            { key: 'phone', label: 'Phone', type: 'tel', placeholder: '(555) 123-4567', format: 'phone' }
         ]);
 
         function collectRows(tableId, keys) {
@@ -668,6 +714,13 @@
             try { localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot())); } catch(e) {}
         }
 
+        function reformat(input) {
+            const fmt = input.dataset && input.dataset.format;
+            if (fmt === 'phone') input.value = formatPhone(input.value);
+            else if (fmt === 'date-mdy') input.value = formatDateMDY(input.value);
+            else if (fmt === 'date-my') input.value = formatDateMY(input.value);
+        }
+
         function loadDraft() {
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
@@ -678,7 +731,10 @@
                     if (!input.name) return;
                     if (input.type === 'checkbox') input.checked = data[input.name] === true;
                     else if (input.type === 'radio') { if (data[input.name] === input.value) input.checked = true; }
-                    else if (data[input.name] !== undefined) input.value = data[input.name];
+                    else if (data[input.name] !== undefined) {
+                        input.value = data[input.name];
+                        reformat(input);
+                    }
                 });
                 if (data._rows) {
                     const buildBack = (rows, addFn, keys) => {
@@ -686,7 +742,10 @@
                             const card = addFn();
                             keys.forEach(k => {
                                 const inp = card.querySelector('[data-row-field="' + k + '"]');
-                                if (inp && row[k]) inp.value = row[k];
+                                if (inp && row[k]) {
+                                    inp.value = row[k];
+                                    reformat(inp);
+                                }
                             });
                         }
                     };
@@ -760,7 +819,12 @@
 
         // Set default date on signature
         const sigDate = form.querySelector('input[name="signature_date"]');
-        if (sigDate && !sigDate.value) sigDate.valueAsDate = new Date();
+        if (sigDate && !sigDate.value) {
+            const d = new Date();
+            const mm = String(d.getMonth() + 1).padStart(2, '0');
+            const dd = String(d.getDate()).padStart(2, '0');
+            sigDate.value = mm + '/' + dd + '/' + d.getFullYear();
+        }
     })();
     </script>
 </body>
