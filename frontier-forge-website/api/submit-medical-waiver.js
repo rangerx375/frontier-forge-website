@@ -7,7 +7,7 @@ export const config = {
   }
 };
 
-const RECIPIENT = 'chuck@holtonnews.com';
+const RECIPIENTS = ['chuck@holtonnews.com', 'Lailaproenza@gmail.com'];
 const SMTP_USER = 'chuck@holtonnews.com';
 
 const ACTIVITY_LABELS = {
@@ -372,7 +372,7 @@ export default async function handler(req, res) {
 
     await transporter.sendMail({
       from: `"FFI Medical Waiver" <${SMTP_USER}>`,
-      to: RECIPIENT,
+      to: RECIPIENTS,
       subject: `FFI Medical Waiver — ${data.camper_name} — ${dateTag}`,
       text: `New medical waiver submitted for ${data.camper_name}.\n\nParent/Guardian: ${data.parent_name}\nParent email: ${data.parent_email || '—'}\nParent cell: ${data.parent_cell || '—'}\n\nFull form attached as PDF.\n\nThis email is the only copy — no data is stored online.`,
       attachments: [{ filename, content: pdfBuffer, contentType: 'application/pdf' }]
