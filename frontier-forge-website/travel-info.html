@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Information | Frontier Forge Institute</title>
+    <meta name="description" content="Travel information form for Frontier Forge Institute campers and parents.">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { width: 100%; max-width: 100%; overflow-x: hidden; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 16px; line-height: 1.6; color: #1a1a1a; background: #f5f2ed; }
+        img { max-width: 100%; height: auto; display: block; }
+        a { color: #8b4513; text-decoration: none; }
+        a:hover { color: #b87333; }
+        h1, h2, h3 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase; }
+
+        .main-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10, 10, 10, 0.95); padding: 12px 16px; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo img { height: 45px; width: auto; background: #f5f2ed; border-radius: 50%; padding: 2px; }
+        .nav-links { display: none; }
+
+        .apply-page { padding-top: 70px; min-height: 100vh; }
+        .apply-hero { background: #1a1a1a; padding: 24px 16px; text-align: center; color: #e8e4e0; }
+        .apply-hero h1 { color: #fff; font-size: 24px; margin-bottom: 8px; }
+        .apply-hero > p { font-size: 14px; max-width: 100%; }
+
+        .application-section { padding: 20px 12px; }
+        .form-container { background: #fff; padding: 16px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .back-link { display: inline-block; font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 0.1em; margin-bottom: 16px; }
+
+        .intro-box { background: #faf6ee; border-left: 3px solid #b87333; padding: 16px; border-radius: 8px; margin-bottom: 24px; font-size: 13px; }
+        .intro-box strong { color: #1e3a2f; }
+
+        .form-section { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #e0e0e0; }
+        .form-section:last-of-type { border-bottom: none; }
+        .form-section-title { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.1em; color: #1e3a2f; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .form-section-title::before { content: ''; width: 3px; height: 18px; background: linear-gradient(180deg, #ff4400, #ffaa00); border-radius: 2px; flex-shrink: 0; }
+        .form-section-subtitle { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.08em; color: #1e3a2f; margin: 16px 0 8px; }
+        .form-section p.helper { font-size: 13px; color: #6a6a6a; margin-bottom: 12px; }
+
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; color: #1a1a1a; }
+        .required { color: #8b4513; }
+        .form-group input, .form-group select, .form-group textarea { display: block; width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-family: inherit; font-size: 16px; background: #fafafa; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #b87333; background: #fff; }
+        .form-group textarea { min-height: 70px; resize: vertical; }
+        .form-group small { display: block; font-size: 11px; color: #6a6a6a; margin-top: 4px; }
+
+        .radio-group { display: block; background: #f8f8f8; padding: 12px; border-radius: 8px; margin-bottom: 12px; }
+        .radio-group input[type="radio"] { width: 20px; height: 20px; margin-right: 10px; vertical-align: middle; accent-color: #8b4513; }
+        .radio-group label { display: inline; font-size: 13px; cursor: pointer; }
+        .radio-group .opt { padding: 6px 0; }
+
+        .checkbox-group { display: block; width: 100%; background: #f8f8f8; padding: 12px; border-radius: 8px; margin-bottom: 8px; box-sizing: border-box; }
+        .checkbox-group input[type="checkbox"] { float: left; width: 20px; height: 20px; margin-right: 10px; margin-top: 2px; accent-color: #8b4513; }
+        .checkbox-group label { display: block; overflow: hidden; font-size: 12px; font-weight: 400; line-height: 1.5; cursor: pointer; margin-bottom: 0; }
+
+        .conditional-fields { display: none; padding: 16px; background: #faf6ee; border-radius: 8px; margin-top: 8px; border-left: 3px solid #b87333; }
+        .conditional-fields.active { display: block; }
+
+        .signature-box { background: #f8f8f8; border-left: 3px solid #b87333; padding: 16px; border-radius: 8px; }
+        .signature-input { font-family: 'Source Serif 4', Georgia, serif !important; font-style: italic; font-size: 22px !important; padding: 16px !important; }
+
+        .submit-btn { display: block; width: 100%; padding: 16px; background: linear-gradient(135deg, #ff4400, #ff6b00, #ffaa00); color: #fff; font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; }
+        .submit-btn:disabled { background: #999; cursor: not-allowed; }
+        .form-footer { text-align: center; font-size: 11px; color: #6a6a6a; margin-top: 12px; }
+
+        #confirmation { display: none; text-align: center; padding: 20px; }
+        #confirmation.show { display: block; }
+        .checkmark-circle { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 16px; }
+        #confirmation h2 { color: #1e3a2f; font-size: 22px; margin-bottom: 8px; }
+        #confirmation > p { color: #6a6a6a; margin-bottom: 20px; }
+
+        .footer { background: #0a0a0a; color: #9a9a9a; padding: 40px 16px; text-align: center; }
+        .footer-logo { width: 80px; margin: 0 auto 16px; border-radius: 50%; }
+        .tagline { font-family: 'Source Serif 4', Georgia, serif; font-style: italic; color: #b87333; margin-bottom: 4px; font-size: 14px; }
+        .scripture-ref { font-size: 12px; color: #9a9a9a; margin-bottom: 8px; }
+        .motto { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.1em; color: #e8e4e0; margin-bottom: 16px; }
+        .footer-links { font-size: 12px; margin-bottom: 16px; }
+        .footer-links a { color: #9a9a9a; }
+        .footer-links span { color: #4a4a4a; margin: 0 8px; }
+        .copyright { font-size: 12px; }
+
+        @media (min-width: 768px) {
+            .nav-links { display: flex; list-style: none; gap: 24px; align-items: center; }
+            .nav-links a { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.1em; color: #e8e4e0; text-transform: uppercase; }
+            .apply-page { padding-top: 100px; }
+            .apply-hero { padding: 60px 32px; }
+            .apply-hero h1 { font-size: 48px; }
+            .apply-hero > p { font-size: 18px; max-width: 700px; margin: 0 auto; }
+            .application-section { padding: 60px 32px; }
+            .form-container { max-width: 800px; margin: 0 auto; padding: 48px; border-radius: 20px; }
+            .form-section-title { font-size: 20px; }
+            .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+            .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+            .submit-btn { font-size: 20px; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><img src="assets/logo.png" alt="Frontier Forge Institute"></a>
+            <ul class="nav-links">
+                <li><a href="index.html#mission">Mission</a></li>
+                <li><a href="index.html#course">The Course</a></li>
+                <li><a href="index.html#schedule">Schedule</a></li>
+                <li><a href="index.html#founder">Founder</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="apply-page">
+        <section class="apply-hero">
+            <h1>Camper Travel Information</h1>
+            <p>Tell us how your son is getting to and from camp so our shuttle can be in the right place at the right time.</p>
+        </section>
+
+        <section class="application-section">
+            <div class="form-container">
+                <a href="index.html" class="back-link">← Back to Home</a>
+
+                <div class="intro-box">
+                    <strong>About this form.</strong> Please fill out one of these for each camper. The camp will pick flying campers up at <strong>Yeager Airport (CRW) in Charleston, WV</strong> and drop them back there in time for their return flight. As with the medical waiver, this form is emailed straight to camp leadership and is <strong>not stored on any website or database.</strong>
+                </div>
+
+                <form id="travelForm">
+                    <!-- SECTION 1 -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">Section 1 — Camper & Travel-Day Contact</h2>
+                        <div class="form-group">
+                            <label>Camper full legal name <span class="required">*</span></label>
+                            <input type="text" name="camper_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Parent / guardian name <span class="required">*</span></label>
+                            <input type="text" name="parent_name" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Parent cell (travel-day) <span class="required">*</span></label>
+                                <input type="tel" name="parent_cell" placeholder="(555) 123-4567" maxlength="14" data-format="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Camper cell during travel</label>
+                                <input type="tel" name="camper_cell" placeholder="(555) 123-4567" maxlength="14" data-format="phone">
+                                <small>Leave blank if he won't have one.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 2 — ARRIVAL -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">Section 2 — Arrival at Camp</h2>
+                        <p class="helper">How is your son getting to the camp on Day 1?</p>
+                        <div class="radio-group" data-method-group="arrival">
+                            <div class="opt"><input type="radio" id="arrival_flying" name="arrival_method" value="flying" required><label for="arrival_flying">Flying into Charleston (CRW) — camp will pick up</label></div>
+                            <div class="opt"><input type="radio" id="arrival_driving" name="arrival_method" value="driving"><label for="arrival_driving">Parents driving the camper to the lodge</label></div>
+                            <div class="opt"><input type="radio" id="arrival_carpool" name="arrival_method" value="carpool"><label for="arrival_carpool">Carpooling with another camper family</label></div>
+                        </div>
+
+                        <div class="conditional-fields" id="arrival_flying_fields" data-show-when="arrival_method=flying">
+                            <h3 class="form-section-subtitle" style="margin-top:0;">Inbound Flight Details</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Airline</label>
+                                    <input type="text" name="arrival_airline" placeholder="e.g. American, Delta, United">
+                                </div>
+                                <div class="form-group">
+                                    <label>Flight number</label>
+                                    <input type="text" name="arrival_flight_number" placeholder="e.g. AA1234">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Departing from (city or airport code)</label>
+                                    <input type="text" name="arrival_origin" placeholder="e.g. Dallas / DFW">
+                                </div>
+                                <div class="form-group">
+                                    <label>Arriving at</label>
+                                    <input type="text" name="arrival_destination" value="CRW (Charleston, WV)">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Arrival date</label>
+                                    <input type="text" inputmode="numeric" name="arrival_date" placeholder="MM/DD/YYYY" maxlength="10" data-format="date-mdy">
+                                </div>
+                                <div class="form-group">
+                                    <label>Arrival time</label>
+                                    <input type="text" name="arrival_time" placeholder="e.g. 2:45 PM">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Confirmation / record locator</label>
+                                <input type="text" name="arrival_confirmation" placeholder="e.g. ABCDEF" style="text-transform:uppercase;">
+                            </div>
+                            <div class="form-group">
+                                <label>Unaccompanied minor service?</label>
+                                <select name="arrival_um">
+                                    <option value="">Select...</option>
+                                    <option value="Yes — UM service booked">Yes — UM service booked</option>
+                                    <option value="No — flying as standard passenger">No — flying as standard passenger</option>
+                                    <option value="N/A — age 15+">N/A — age 15+</option>
+                                </select>
+                                <small>Arranging UM service with the airline is the parent's responsibility.</small>
+                            </div>
+                        </div>
+
+                        <div class="conditional-fields" id="arrival_driving_fields" data-show-when="arrival_method=driving">
+                            <h3 class="form-section-subtitle" style="margin-top:0;">Drive-In Details</h3>
+                            <div class="form-group">
+                                <label>Driver name</label>
+                                <input type="text" name="arrival_driver_name">
+                            </div>
+                            <div class="form-group">
+                                <label>Vehicle (color, make, model)</label>
+                                <input type="text" name="arrival_vehicle" placeholder="e.g. Silver Toyota Highlander">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Estimated arrival date</label>
+                                    <input type="text" inputmode="numeric" name="arrival_drive_date" placeholder="MM/DD/YYYY" maxlength="10" data-format="date-mdy">
+                                </div>
+                                <div class="form-group">
+                                    <label>Estimated arrival time</label>
+                                    <input type="text" name="arrival_drive_time" placeholder="e.g. 4:00 PM">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="conditional-fields" id="arrival_carpool_fields" data-show-when="arrival_method=carpool">
+                            <h3 class="form-section-subtitle" style="margin-top:0;">Carpool Details</h3>
+                            <div class="form-group">
+                                <label>Carpooling with (other camper or family name)</label>
+                                <input type="text" name="arrival_carpool_with">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Driver contact name</label>
+                                    <input type="text" name="arrival_carpool_driver_name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Driver contact phone</label>
+                                    <input type="tel" name="arrival_carpool_driver_phone" placeholder="(555) 123-4567" maxlength="14" data-format="phone">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Estimated arrival date</label>
+                                    <input type="text" inputmode="numeric" name="arrival_carpool_date" placeholder="MM/DD/YYYY" maxlength="10" data-format="date-mdy">
+                                </div>
+                                <div class="form-group">
+                                    <label>Estimated arrival time</label>
+                                    <input type="text" name="arrival_carpool_time" placeholder="e.g. 4:00 PM">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 3 — DEPARTURE -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">Section 3 — Return from Camp</h2>
+                        <p class="helper">How is your son getting home?</p>
+                        <div class="radio-group" data-method-group="departure">
+                            <div class="opt"><input type="radio" id="departure_flying" name="departure_method" value="flying" required><label for="departure_flying">Flying out of Charleston (CRW) — camp will deliver</label></div>
+                            <div class="opt"><input type="radio" id="departure_driving" name="departure_method" value="driving"><label for="departure_driving">Parents picking up the camper from the lodge</label></div>
+                            <div class="opt"><input type="radio" id="departure_carpool" name="departure_method" value="carpool"><label for="departure_carpool">Carpooling home with another family</label></div>
+                        </div>
+
+                        <div class="conditional-fields" id="departure_flying_fields" data-show-when="departure_method=flying">
+                            <h3 class="form-section-subtitle" style="margin-top:0;">Outbound Flight Details</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Airline</label>
+                                    <input type="text" name="departure_airline" placeholder="e.g. American, Delta, United">
+                                </div>
+                                <div class="form-group">
+                                    <label>Flight number</label>
+                                    <input type="text" name="departure_flight_number" placeholder="e.g. AA1234">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Departing from</label>
+                                    <input type="text" name="departure_origin" value="CRW (Charleston, WV)">
+                                </div>
+                                <div class="form-group">
+                                    <label>Arriving at (home airport / city)</label>
+                                    <input type="text" name="departure_destination" placeholder="e.g. Dallas / DFW">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Departure date</label>
+                                    <input type="text" inputmode="numeric" name="departure_date" placeholder="MM/DD/YYYY" maxlength="10" data-format="date-mdy">
+                                </div>
+                                <div class="form-group">
+                                    <label>Departure time</label>
+                                    <input type="text" name="departure_time" placeholder="e.g. 2:45 PM">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Confirmation / record locator</label>
+                                <input type="text" name="departure_confirmation" placeholder="e.g. ABCDEF" style="text-transform:uppercase;">
+                            </div>
+                            <div class="form-group">
+                                <label>Unaccompanied minor service?</label>
+                                <select name="departure_um">
+                                    <option value="">Select...</option>
+                                    <option value="Yes — UM service booked">Yes — UM service booked</option>
+                                    <option value="No — flying as standard passenger">No — flying as standard passenger</option>
+                                    <option value="N/A — age 15+">N/A — age 15+</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="conditional-fields" id="departure_driving_fields" data-show-when="departure_method=driving">
+                            <h3 class="form-section-subtitle" style="margin-top:0;">Pickup Details</h3>
+                            <div class="form-group">
+                                <label>Driver name</label>
+                                <input type="text" name="departure_driver_name">
+                            </div>
+                            <div class="form-group">
+                                <label>Vehicle (color, make, model)</label>
+                                <input type="text" name="departure_vehicle" placeholder="e.g. Silver Toyota Highlander">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Estimated pickup date</label>
+                                    <input type="text" inputmode="numeric" name="departure_drive_date" placeholder="MM/DD/YYYY" maxlength="10" data-format="date-mdy">
+                                </div>
+                                <div class="form-group">
+                                    <label>Estimated pickup time</label>
+                                    <input type="text" name="departure_drive_time" placeholder="e.g. 10:00 AM">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="conditional-fields" id="departure_carpool_fields" data-show-when="departure_method=carpool">
+                            <h3 class="form-section-subtitle" style="margin-top:0;">Carpool Details</h3>
+                            <div class="form-group">
+                                <label>Carpooling with (other camper or family name)</label>
+                                <input type="text" name="departure_carpool_with">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Driver contact name</label>
+                                    <input type="text" name="departure_carpool_driver_name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Driver contact phone</label>
+                                    <input type="tel" name="departure_carpool_driver_phone" placeholder="(555) 123-4567" maxlength="14" data-format="phone">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Estimated pickup date</label>
+                                    <input type="text" inputmode="numeric" name="departure_carpool_date" placeholder="MM/DD/YYYY" maxlength="10" data-format="date-mdy">
+                                </div>
+                                <div class="form-group">
+                                    <label>Estimated pickup time</label>
+                                    <input type="text" name="departure_carpool_time" placeholder="e.g. 10:00 AM">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 4 — NOTES -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">Section 4 — Notes</h2>
+                        <div class="form-group">
+                            <label>Anything else camp should know about travel?</label>
+                            <textarea name="travel_notes" placeholder="Layovers, special airline assistance, late connections, family driving in the night before, etc."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 5 — ACKNOWLEDGMENT & SIGNATURE -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">Section 5 — Acknowledgment & Signature</h2>
+
+                        <div class="checkbox-group"><input type="checkbox" id="ack_shuttle" name="ack_shuttle" required><label for="ack_shuttle">I acknowledge that the camp will provide ground transportation between Yeager Airport (CRW) in Charleston, WV and the camp lodge for flying campers. <span class="required">*</span></label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="ack_um" name="ack_um" required><label for="ack_um">I acknowledge that arranging unaccompanied minor service with the airline (if needed) is my responsibility, not the camp's. <span class="required">*</span></label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="ack_accurate" name="ack_accurate" required><label for="ack_accurate">The travel information above is accurate and complete to the best of my knowledge. <span class="required">*</span></label></div>
+
+                        <p class="helper" style="margin-top:16px;">Type your full legal name below to sign.</p>
+                        <div class="signature-box">
+                            <div class="form-group">
+                                <label>Typed signature (full legal name) <span class="required">*</span></label>
+                                <input type="text" name="signature_typed" class="signature-input" placeholder="Your full legal name" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Printed name <span class="required">*</span></label>
+                                    <input type="text" name="signature_printed_name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Relationship to camper <span class="required">*</span></label>
+                                    <input type="text" name="signature_relationship" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Date <span class="required">*</span></label>
+                                <input type="text" inputmode="numeric" name="signature_date" placeholder="MM/DD/YYYY" maxlength="10" data-format="date-mdy" pattern="\d{2}/\d{2}/\d{4}" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">Submit Travel Information</button>
+                    <p class="form-footer">Your form will be emailed to camp leadership. Nothing is stored on a website.</p>
+                </form>
+
+                <div id="confirmation">
+                    <div class="checkmark-circle">✓</div>
+                    <h2>Travel Info Submitted</h2>
+                    <p>Thank you. Your son's travel plans have been emailed to camp leadership.</p>
+                    <p style="font-size:13px;">If your plans change later, just resubmit this form with the updated info — it will replace the previous version on our end.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <img src="assets/logo.png" alt="Frontier Forge Institute" class="footer-logo">
+        <p class="tagline">"Be watchful, stand firm in the faith, act like men, be strong."</p>
+        <p class="scripture-ref">— 1 Corinthians 16:13</p>
+        <p class="motto">Forging Leaders of Tomorrow</p>
+        <div class="footer-links">
+            <a href="privacy.html">Privacy Policy</a>
+            <span>|</span>
+            <a href="terms.html">Terms of Service</a>
+        </div>
+        <p class="copyright">© 2025 Frontier Forge Institute. All rights reserved.</p>
+    </footer>
+
+    <script>
+    (function() {
+        const STORAGE_KEY = 'ffi_travel_draft_v1';
+        const form = document.getElementById('travelForm');
+
+        // ===== AUTO-FORMATTERS =====
+        function formatPhone(v) {
+            const d = String(v || '').replace(/\D/g, '').slice(0, 10);
+            if (d.length === 0) return '';
+            if (d.length <= 3) return '(' + d;
+            if (d.length <= 6) return '(' + d.slice(0, 3) + ') ' + d.slice(3);
+            return '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6);
+        }
+        function formatDateMDY(v) {
+            const d = String(v || '').replace(/\D/g, '').slice(0, 8);
+            if (d.length === 0) return '';
+            if (d.length <= 2) return d;
+            if (d.length <= 4) return d.slice(0, 2) + '/' + d.slice(2);
+            return d.slice(0, 2) + '/' + d.slice(2, 4) + '/' + d.slice(4);
+        }
+        function attachFormatter(input) {
+            const fmt = input.dataset && input.dataset.format;
+            const fn = fmt === 'phone' ? formatPhone : (fmt === 'date-mdy' ? formatDateMDY : null);
+            if (!fn) return;
+            input.addEventListener('input', () => {
+                const before = input.value;
+                const after = fn(before);
+                if (before !== after) input.value = after;
+            });
+            input.addEventListener('blur', () => { input.value = fn(input.value); });
+        }
+        function reformat(input) {
+            const fmt = input.dataset && input.dataset.format;
+            if (fmt === 'phone') input.value = formatPhone(input.value);
+            else if (fmt === 'date-mdy') input.value = formatDateMDY(input.value);
+        }
+        document.querySelectorAll('[data-format]').forEach(attachFormatter);
+
+        // ===== CONDITIONAL SHOW/HIDE =====
+        function setupConditional(prefix) {
+            const radios = document.querySelectorAll(`input[name="${prefix}_method"]`);
+            const sections = document.querySelectorAll(`[data-show-when^="${prefix}_method="]`);
+            function update() {
+                const checked = document.querySelector(`input[name="${prefix}_method"]:checked`);
+                const value = checked ? checked.value : null;
+                sections.forEach(s => {
+                    const want = s.dataset.showWhen.split('=')[1];
+                    s.classList.toggle('active', want === value);
+                });
+            }
+            radios.forEach(r => r.addEventListener('change', () => { update(); saveDraft(); }));
+            update();
+        }
+        setupConditional('arrival');
+        setupConditional('departure');
+
+        // ===== AUTO-SAVE =====
+        function snapshot() {
+            const data = {};
+            form.querySelectorAll('input, select, textarea').forEach(input => {
+                if (!input.name) return;
+                if (input.type === 'checkbox') data[input.name] = input.checked;
+                else if (input.type === 'radio') { if (input.checked) data[input.name] = input.value; }
+                else data[input.name] = input.value;
+            });
+            return data;
+        }
+        function saveDraft() {
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot())); } catch(e) {}
+        }
+        function loadDraft() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return;
+                const data = JSON.parse(raw);
+                form.querySelectorAll('input, select, textarea').forEach(input => {
+                    if (!input.name) return;
+                    if (input.type === 'checkbox') input.checked = data[input.name] === true;
+                    else if (input.type === 'radio') {
+                        if (data[input.name] === input.value) input.checked = true;
+                    }
+                    else if (data[input.name] !== undefined) {
+                        input.value = data[input.name];
+                        reformat(input);
+                    }
+                });
+                // Re-evaluate visibility after restoring radios
+                ['arrival', 'departure'].forEach(p => {
+                    const checked = document.querySelector(`input[name="${p}_method"]:checked`);
+                    const value = checked ? checked.value : null;
+                    document.querySelectorAll(`[data-show-when^="${p}_method="]`).forEach(s => {
+                        s.classList.toggle('active', s.dataset.showWhen.split('=')[1] === value);
+                    });
+                });
+            } catch(e) {}
+        }
+        loadDraft();
+        form.addEventListener('input', saveDraft);
+        form.addEventListener('change', saveDraft);
+
+        // Default signature date to today
+        const sigDate = form.querySelector('input[name="signature_date"]');
+        if (sigDate && !sigDate.value) {
+            const d = new Date();
+            const mm = String(d.getMonth() + 1).padStart(2, '0');
+            const dd = String(d.getDate()).padStart(2, '0');
+            sigDate.value = mm + '/' + dd + '/' + d.getFullYear();
+        }
+
+        // ===== SUBMIT =====
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+
+            const payload = {};
+            form.querySelectorAll('input, select, textarea').forEach(input => {
+                if (!input.name) return;
+                if (input.type === 'checkbox') payload[input.name] = input.checked;
+                else if (input.type === 'radio') { if (input.checked) payload[input.name] = input.value; }
+                else payload[input.name] = input.value;
+            });
+            payload.submitted_at_display = new Date().toLocaleString('en-US');
+
+            try {
+                const res = await fetch('/api/submit-travel-info', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) throw new Error('Server error');
+                localStorage.removeItem(STORAGE_KEY);
+                form.style.display = 'none';
+                document.querySelector('.intro-box').style.display = 'none';
+                document.querySelector('.back-link').style.display = 'none';
+                document.getElementById('confirmation').classList.add('show');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch (err) {
+                alert('Sorry — submission failed. Please try again, or email the camp coordinator directly.');
+                btn.disabled = false;
+                btn.textContent = 'Submit Travel Information';
+            }
+        });
+    })();
+    </script>
+</body>
+</html>
