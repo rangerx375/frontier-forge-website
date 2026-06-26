@@ -104,6 +104,51 @@
         }
         .impact-card p { color: var(--color-gray); line-height: 1.55; font-size: 0.98rem; }
 
+        /* Give Once / Give Monthly toggle */
+        .give-toggle {
+            display: flex;
+            width: fit-content;
+            margin: 0 auto 2.25rem;
+            background: var(--color-white);
+            border: 2px solid rgba(184,115,51,0.3);
+            border-radius: 999px;
+            padding: 5px;
+            gap: 4px;
+        }
+        .give-toggle .toggle-btn {
+            font-family: var(--font-display);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 1.05rem;
+            color: var(--color-gray);
+            background: transparent;
+            border: none;
+            border-radius: 999px;
+            padding: 0.65rem 1.75rem;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        .give-toggle .toggle-btn.active {
+            color: #fff;
+            background: linear-gradient(135deg, #ff4400, #ff6b00, #ffaa00);
+            box-shadow: 0 6px 18px rgba(255,68,0,0.3);
+        }
+        .toggle-wrap { text-align: center; }
+
+        /* Monthly single-card layout */
+        .levels-grid.mode-monthly {
+            grid-template-columns: minmax(0, 360px);
+            justify-content: center;
+        }
+        .monthly-card { border-top: 4px solid var(--color-copper); }
+        .level-card .amount .per {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-gray);
+            letter-spacing: 0;
+        }
+
         /* Giving levels */
         .levels-grid {
             display: grid;
@@ -274,8 +319,16 @@
     <section class="give-section alt">
         <div class="container">
             <h2>Choose Your Impact</h2>
-            <p class="section-sub">Select a level below, or give any amount that's on your heart. Every gift is put to work forging leaders.</p>
-            <div class="levels-grid">
+            <p class="section-sub">Give once, or become a monthly partner. Every gift is put to work forging leaders.</p>
+
+            <!-- Give Once / Give Monthly toggle -->
+            <div class="give-toggle" role="tablist" aria-label="Choose giving frequency">
+                <button type="button" class="toggle-btn active" data-mode="once" aria-selected="true">Give Once</button>
+                <button type="button" class="toggle-btn" data-mode="monthly" aria-selected="false">Give Monthly</button>
+            </div>
+
+            <!-- One-time levels -->
+            <div class="levels-grid mode-once">
                 <a href="https://donate.stripe.com/00w6oHg1I0kSd059z7fYY05" class="level-card">
                     <span class="amount">$50</span>
                     <span class="label">Provision</span>
@@ -297,10 +350,21 @@
                     <span class="desc">Fully sponsors one young man — a complete $1,295 scholarship through The Forge.</span>
                 </a>
             </div>
+
+            <!-- Monthly partner -->
+            <div class="levels-grid mode-monthly" style="display:none;">
+                <a href="https://buy.stripe.com/8x2dR902K3x4bW17qZfYY06" class="level-card monthly-card">
+                    <span class="amount">$25<span class="per">/mo</span></span>
+                    <span class="label">Monthly Partner</span>
+                    <span class="desc">Sustain The Forge every month. On the next page you can raise your gift in $25 steps — $50, $75, $100 and beyond. Cancel anytime.</span>
+                </a>
+            </div>
+
             <div class="give-cta-wrap">
-                <a href="https://donate.stripe.com/00w6oHg1I0kSd059z7fYY05" class="btn-give">Give Now</a>
+                <a href="https://donate.stripe.com/00w6oHg1I0kSd059z7fYY05" class="btn-give" data-cta>Give Now</a>
                 <p class="give-note">
-                    You'll be taken to our secure Stripe page to choose your amount and complete your gift.
+                    <span data-note-once>You'll be taken to our secure Stripe page to complete your one-time gift.</span>
+                    <span data-note-monthly style="display:none;">You'll be taken to our secure Stripe page to set up your monthly gift, starting at $25/month. Adjust the amount in $25 steps there, and cancel anytime.</span>
                     <br><br>
                     Frontier Forge Institute is a program of the James Megellas Foundation, Inc., a registered 501(c)(3) nonprofit organization (EIN 27-3047777). Your gift is tax-deductible to the fullest extent allowed by law. No goods or services are provided in exchange for your contribution.
                 </p>
@@ -345,6 +409,30 @@
             if (window.scrollY > 50) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
         });
+
+        // Give Once / Give Monthly toggle
+        const ONCE_URL = 'https://donate.stripe.com/00w6oHg1I0kSd059z7fYY05';
+        const MONTHLY_URL = 'https://buy.stripe.com/8x2dR902K3x4bW17qZfYY06';
+        const toggleBtns = document.querySelectorAll('.toggle-btn');
+        const onceGrid = document.querySelector('.mode-once');
+        const monthlyGrid = document.querySelector('.mode-monthly');
+        const ctaBtn = document.querySelector('[data-cta]');
+        const noteOnce = document.querySelector('[data-note-once]');
+        const noteMonthly = document.querySelector('[data-note-monthly]');
+        toggleBtns.forEach(btn => btn.addEventListener('click', () => {
+            const monthly = btn.dataset.mode === 'monthly';
+            toggleBtns.forEach(b => {
+                const on = b === btn;
+                b.classList.toggle('active', on);
+                b.setAttribute('aria-selected', on ? 'true' : 'false');
+            });
+            onceGrid.style.display = monthly ? 'none' : '';
+            monthlyGrid.style.display = monthly ? '' : 'none';
+            ctaBtn.href = monthly ? MONTHLY_URL : ONCE_URL;
+            ctaBtn.textContent = monthly ? 'Start Monthly Gift' : 'Give Now';
+            noteOnce.style.display = monthly ? 'none' : '';
+            noteMonthly.style.display = monthly ? '' : 'none';
+        }));
     </script>
 </body>
 </html>
