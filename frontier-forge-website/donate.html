@@ -13,6 +13,10 @@
     <style>
         html { scroll-behavior: smooth; }
 
+        /* styles.css hides every <section> (opacity:0) until the homepage scroll-observer
+           script adds .visible. This page doesn't load that script, so force sections visible. */
+        section { opacity: 1 !important; transform: none !important; }
+
         /* Donate hero */
         .give-hero {
             position: relative;
