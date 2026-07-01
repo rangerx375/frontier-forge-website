@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Vision | Frontier Forge Institute</title>
+    <meta name="description" content="Help us acquire the former U.S. Mine Academy in Mount Hope, West Virginia — and turn it into a one-year residential academy training young men in godly wisdom, first-responder skills, and a trade.">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        html { scroll-behavior: smooth; }
+
+        /* styles.css hides every <section> (opacity:0) until the homepage scroll-observer
+           script adds .visible. This page doesn't load that script, so force sections visible. */
+        section { opacity: 1 !important; transform: none !important; }
+
+        /* Hero */
+        .vision-hero {
+            position: relative;
+            min-height: 88vh;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 1.5rem 4rem;
+            background:
+                linear-gradient(rgba(10,10,10,0.55), rgba(10,10,10,0.82)),
+                url('assets/vision/aerial-full.jpg') center 45% / cover no-repeat,
+                var(--color-charcoal);
+            overflow: hidden;
+        }
+        .vision-hero-content { position: relative; z-index: 2; max-width: 860px; }
+        .vision-eyebrow {
+            font-family: var(--font-display);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--color-copper);
+            font-size: 1.15rem;
+            margin-bottom: 0.9rem;
+        }
+        .vision-hero h1 {
+            font-family: var(--font-display);
+            color: var(--color-white);
+            font-size: clamp(2.8rem, 8vw, 5.5rem);
+            line-height: 0.95;
+            letter-spacing: 0.02em;
+            margin-bottom: 1.25rem;
+        }
+        .vision-hero p.lede {
+            font-family: var(--font-serif);
+            color: var(--color-off-white);
+            font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+            line-height: 1.6;
+            margin: 0 auto 2.25rem;
+            max-width: 720px;
+        }
+
+        /* Generic section shells (reuse look of donate page) */
+        .vision-section { padding: 5rem 1.5rem; }
+        .vision-section .container { max-width: 1040px; margin: 0 auto; }
+        .vision-section.alt { background: var(--color-cream); }
+        .vision-section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: var(--color-charcoal);
+            text-align: center;
+            letter-spacing: 0.03em;
+            margin-bottom: 1rem;
+        }
+        .vision-section .section-sub {
+            text-align: center;
+            color: var(--color-gray);
+            font-family: var(--font-serif);
+            font-size: 1.18rem;
+            max-width: 720px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+        }
+        .prose { max-width: 760px; margin: 0 auto; }
+        .prose p {
+            color: var(--color-gray);
+            font-family: var(--font-serif);
+            font-size: 1.12rem;
+            line-height: 1.8;
+            margin-bottom: 1.4rem;
+        }
+        .prose strong { color: var(--color-charcoal); }
+
+        /* Building stats */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+            margin: 2.5rem auto 0;
+        }
+        .stat-card {
+            background: var(--color-white);
+            border: 1px solid rgba(184,115,51,0.25);
+            border-top: 4px solid var(--color-copper);
+            padding: 1.75rem 1rem;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+        }
+        .stat-card .num {
+            font-family: var(--font-display);
+            font-size: 2.6rem;
+            color: var(--color-rust);
+            line-height: 1;
+        }
+        .stat-card .lbl {
+            font-family: var(--font-body);
+            color: var(--color-gray);
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+            letter-spacing: 0.02em;
+        }
+
+        /* Photo gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
+        .gallery img {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 16 / 10;
+            object-fit: cover;
+            border-radius: 6px;
+            box-shadow: 0 10px 34px rgba(0,0,0,0.14);
+        }
+        .gallery figure { margin: 0; }
+        .gallery figcaption {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            color: var(--color-medium-gray);
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        /* Pillars (what the academy teaches) */
+        .pillar-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .pillar {
+            background: var(--color-white);
+            border: 1px solid rgba(184,115,51,0.25);
+            border-top: 4px solid var(--color-copper);
+            padding: 2.25rem 1.75rem;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+        }
+        .pillar .icon { font-size: 2.4rem; margin-bottom: 0.85rem; }
+        .pillar h3 {
+            font-family: var(--font-display);
+            font-size: 1.55rem;
+            letter-spacing: 0.05em;
+            color: var(--color-rust);
+            margin-bottom: 0.6rem;
+        }
+        .pillar p { color: var(--color-gray); line-height: 1.6; font-size: 1rem; }
+
+        /* Plan steps */
+        .steps { max-width: 820px; margin: 2rem auto 0; }
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(184,115,51,0.2);
+        }
+        .step:last-child { border-bottom: none; }
+        .step .n {
+            flex: none;
+            width: 54px; height: 54px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: #fff;
+            background: linear-gradient(135deg, #ff4400, #ff6b00, #ffaa00);
+            border-radius: 50%;
+            box-shadow: 0 6px 18px rgba(255,68,0,0.3);
+        }
+        .step h3 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            letter-spacing: 0.04em;
+            color: var(--color-charcoal);
+            margin-bottom: 0.35rem;
+        }
+        .step p { color: var(--color-gray); font-family: var(--font-serif); line-height: 1.65; font-size: 1.05rem; }
+        .step.now h3 { color: var(--color-rust); }
+
+        /* Goal / fundraising block */
+        .goal-wrap { max-width: 720px; margin: 0 auto; text-align: center; }
+        .goal-amount {
+            font-family: var(--font-display);
+            font-size: clamp(2.6rem, 7vw, 4.5rem);
+            color: var(--color-charcoal);
+            line-height: 1;
+        }
+        .goal-amount .sub {
+            display: block;
+            font-family: var(--font-body);
+            font-size: 1.05rem;
+            color: var(--color-gray);
+            letter-spacing: 0.05em;
+            margin-top: 0.6rem;
+        }
+        .thermo {
+            height: 22px;
+            background: rgba(184,115,51,0.18);
+            border-radius: 999px;
+            overflow: hidden;
+            margin: 2rem 0 0.75rem;
+        }
+        .thermo .fill {
+            height: 100%;
+            width: 2%;
+            background: linear-gradient(90deg, #ff4400, #ff6b00, #ffaa00);
+            border-radius: 999px;
+        }
+        .thermo-labels {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--color-gray);
+        }
+
+        .give-cta-wrap { text-align: center; margin-top: 2.75rem; }
+        .btn-give {
+            display: inline-block;
+            font-family: var(--font-display);
+            font-size: 1.45rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 1.15rem 3.5rem;
+            color: #fff;
+            background: linear-gradient(135deg, #ff4400 0%, #ff6b00 50%, #ffaa00 100%);
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            box-shadow: 0 12px 40px rgba(255,68,0,0.4), 0 0 80px rgba(255,107,0,0.18);
+            transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+        .btn-give:hover {
+            transform: scale(1.04) translateY(-3px);
+            box-shadow: 0 20px 60px rgba(255,68,0,0.6), 0 0 120px rgba(255,107,0,0.35);
+            color: #fff;
+        }
+        .secure-badge {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            margin-top: 1rem; color: var(--color-medium-gray); font-size: 0.85rem;
+        }
+        .give-note {
+            margin: 1.5rem auto 0; max-width: 620px;
+            color: var(--color-medium-gray); font-size: 0.92rem; line-height: 1.6;
+        }
+
+        /* Scripture */
+        .vision-scripture {
+            background: var(--color-charcoal);
+            color: var(--color-off-white);
+            text-align: center;
+            padding: 4.5rem 1.5rem;
+        }
+        .vision-scripture blockquote {
+            font-family: var(--font-serif);
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            line-height: 1.6; max-width: 760px; margin: 0 auto 1rem; font-style: italic;
+        }
+        .vision-scripture .ref { color: var(--color-copper); font-family: var(--font-display); letter-spacing: 0.1em; font-size: 1.1rem; }
+
+        @media (max-width: 900px) {
+            .stat-grid { grid-template-columns: repeat(2, 1fr); }
+            .pillar-grid { grid-template-columns: 1fr; }
+            .gallery { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 560px) {
+            .gallery { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html#hero" class="nav-logo">
+                <img src="assets/logo.png" alt="Frontier Forge Institute">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#mission">Mission</a></li>
+                <li><a href="index.html#course">The Course</a></li>
+                <li><a href="index.html#cadre">Cadre</a></li>
+                <li><a href="index.html#faq">FAQ</a></li>
+                <li><a href="vision.html">Our Vision</a></li>
+                <li><a href="donate.html" class="nav-cta">Give</a></li>
+            </ul>
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="vision-hero" id="vision">
+        <div class="vision-hero-content">
+            <p class="vision-eyebrow">Our Vision</p>
+            <h1>A Permanent Home for The Forge</h1>
+            <p class="lede">We have the chance to acquire the Eisenhower Building — the former U.S. Mine Academy in Mount Hope, West Virginia — 34,000 square feet of classrooms, shops, and grounds — and turn it into the <strong>Appalachian Leadership &amp; Training Academy</strong>: a year-long residential academy that forges young men in faith, service, and skill.</p>
+            <div class="give-cta-wrap" style="margin-top:0;">
+                <a href="#give" class="btn-give">Join the Building Fund</a>
+                <div class="secure-badge">🔒 A campaign of the James Megellas Foundation, 501(c)(3)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Opportunity -->
+    <section class="vision-section">
+        <div class="container">
+            <h2>The Opportunity</h2>
+            <p class="section-sub">A solid, mid-century institutional campus — built by the federal government to train the nation's mine-safety instructors — is on the market and within our reach.</p>
+            <div class="prose">
+                <p>Tucked into the hills of <strong>Mount Hope, West Virginia</strong>, and built in <strong>1958</strong>, the <strong>Eisenhower Building</strong> — the former <strong>U.S. Mine Safety and Health Administration Academy</strong> — was constructed to a standard you simply can't build today — block and brick, room after room, made to house and teach hundreds of students at a time.</p>
+                <p>It offers <strong>34,000 square feet</strong>, <strong>64 classrooms</strong>, and a <strong>cavernous garage</strong> ideal for a working trades shop. It sits directly beside a <strong>disused football stadium</strong> that would make a ready-made physical-training field, and it's just minutes from the <strong>Summit Bechtel Reserve</strong>, where the Boy Scouts of America draw tens of thousands of young people every year. In short — it was practically built for what God has put on our hearts to do.</p>
+                <p>Listed at <strong>$690,000</strong> just two years ago, this solid campus can be acquired today for under <strong>$300,000</strong> — but that window won't stay open forever. With your help, we can secure it now.</p>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-card"><div class="num">34,000</div><div class="lbl">Square feet</div></div>
+                <div class="stat-card"><div class="num">64</div><div class="lbl">Classrooms</div></div>
+                <div class="stat-card"><div class="num">1958</div><div class="lbl">Built to last</div></div>
+                <div class="stat-card"><div class="num">1</div><div class="lbl">Adjacent stadium / PT field</div></div>
+            </div>
+
+            <!-- Photo gallery -->
+            <div class="gallery">
+                <figure>
+                    <img src="assets/vision/entrance.webp" alt="Front entrance of the Eisenhower Building, Mount Hope WV">
+                    <figcaption>The front entrance — built to last, ready for a new purpose.</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/vision/classroom.webp" alt="One of the building's many classrooms">
+                    <figcaption>One of 64 classrooms — future teaching and training space.</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/vision/garage.webp" alt="The large interior garage and mechanical bay">
+                    <figcaption>The cavernous garage — a natural home for a trades shop.</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/vision/hallway.webp" alt="A long institutional hallway inside the building">
+                    <figcaption>Wide, solid corridors run the length of each wing.</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/vision/stadium-aerial.webp" alt="Aerial showing the building beside the football stadium">
+                    <figcaption>The stadium next door — a ready-made PT field.</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/vision/exterior.webp" alt="Exterior view of the building's wings and grounds">
+                    <figcaption>34,000 square feet of brick-and-block construction.</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Vision -->
+    <section class="vision-section alt">
+        <div class="container">
+            <h2>What It Will Become</h2>
+            <p class="section-sub">The <strong>Appalachian Leadership &amp; Training Academy</strong> — a one-year residential program for motivated young men straight out of high school, modeled after proven academies like the International ALERT Academy in Big Sandy, Texas.</p>
+            <div class="pillar-grid">
+                <div class="pillar">
+                    <div class="icon">✝️</div>
+                    <h3>Godly Wisdom</h3>
+                    <p>A full year immersed in Scripture, discipleship, and the daily habits of a man of character — the foundation everything else is built on.</p>
+                </div>
+                <div class="pillar">
+                    <div class="icon">🚑</div>
+                    <h3>First-Responder Skills</h3>
+                    <p>Real, certifiable training in emergency medicine, rescue, and readiness — so these young men can run toward trouble and serve their neighbors.</p>
+                </div>
+                <div class="pillar">
+                    <div class="icon">🔧</div>
+                    <h3>A Marketable Trade</h3>
+                    <p>Hands-on mastery of a skilled trade — electrical, plumbing, welding, HVAC, automotive, and more — so every graduate leaves with a livelihood in his hands.</p>
+                </div>
+            </div>
+            <div class="prose" style="margin-top:2.75rem;">
+                <p>A young man would arrive the fall after graduation and spend twelve months living, working, worshiping, and training alongside mentors of proven character. He'd leave with his faith deepened, his body hardened, a first-responder certification, and a trade that can support a family for life. That is the kind of man this country is starving for — and this building is where we'll forge him.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Plan -->
+    <section class="vision-section">
+        <div class="container">
+            <h2>How We Get There</h2>
+            <p class="section-sub">The building is the key that unlocks everything else. Here's the path.</p>
+            <div class="steps">
+                <div class="step now">
+                    <div class="n">1</div>
+                    <div>
+                        <h3>Acquire the building — this is where you come in</h3>
+                        <p>We must own the property before we can do anything else. That's the purpose of this campaign: to raise the funds to purchase the former Mine Academy outright.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="n">2</div>
+                    <div>
+                        <h3>Renovate &amp; equip the campus</h3>
+                        <p>With the building secured, we'll bring together support from private donors, foundations, and community development partners to renovate the facility and stand up the academy — work that can only begin once the property is ours.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="n">3</div>
+                    <div>
+                        <h3>Open the doors to the first class</h3>
+                        <p>Renovate, staff, and launch a residential academy that will train young men from across the country, year after year, for generations to come.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Giving / Building Fund -->
+    <section class="vision-section alt" id="give">
+        <div class="container">
+            <h2>Join the Building Fund</h2>
+            <p class="section-sub">The goal is not a building — it's to build men. But the building is where it begins. Every gift moves us closer to the deed, and to the first young man who walks through those doors.</p>
+            <div class="goal-wrap">
+                <div class="goal-amount">$350,000<span class="sub">Our goal to acquire the building and open the doors</span></div>
+                <div class="thermo"><div class="fill" data-fill></div></div>
+                <div class="thermo-labels"><span data-raised>$20,000 raised so far</span><span>Goal: $350,000</span></div>
+
+                <div class="give-cta-wrap">
+                    <a href="https://donate.stripe.com/00w6oHg1I0kSd059z7fYY05" class="btn-give">Give to the Building Fund</a>
+                    <div class="secure-badge">🔒 Secure giving powered by Stripe</div>
+                    <p class="give-note">
+                        Gifts to the building fund help Frontier Forge Institute acquire the former U.S. Mine Academy in Mount Hope, WV.
+                        Frontier Forge Institute is a program of the James Megellas Foundation, Inc., a registered 501(c)(3) nonprofit
+                        organization (EIN 27-3047777). Your gift is tax-deductible to the fullest extent allowed by law.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripture -->
+    <section class="vision-scripture">
+        <blockquote>"Unless the Lord builds the house, those who build it labor in vain."</blockquote>
+        <p class="ref">— Psalm 127:1</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <img src="assets/logo.png" alt="Frontier Forge Institute" class="footer-logo">
+            <p class="tagline">"Be watchful, stand firm in the faith, act like men, be strong."</p>
+            <p class="scripture-ref">— 1 Corinthians 16:13</p>
+            <p class="motto"><strong>Forging Leaders of Tomorrow</strong></p>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <span>|</span>
+                <a href="donate.html">Give</a>
+                <span>|</span>
+                <a href="privacy.html">Privacy Policy</a>
+                <span>|</span>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+            <p class="copyright">&copy; 2026 Frontier Forge Institute. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        if (menuBtn && navLinks) {
+            menuBtn.addEventListener('click', () => navLinks.classList.toggle('active'));
+        }
+        // Solidify nav background on scroll
+        const nav = document.querySelector('.main-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        // Building-fund thermometer. Update RAISED as gifts come in.
+        const RAISED = 20000;
+        const GOAL = 350000;
+        const fill = document.querySelector('[data-fill]');
+        const raisedEl = document.querySelector('[data-raised]');
+        if (fill) {
+            const pct = Math.max(2, Math.min(100, Math.round((RAISED / GOAL) * 100)));
+            fill.style.width = pct + '%';
+        }
+        if (raisedEl) {
+            raisedEl.textContent = '$' + RAISED.toLocaleString() + ' raised so far';
+        }
+    </script>
+</body>
+</html>
