@@ -616,28 +616,23 @@
     <div class="apply-page">
         <section class="apply-hero">
             <h1>Invited Applicant</h1>
-            <p>Please complete the application below to reserve the final spot in the August 2026 session of The Forge.</p>
+            <p>You've been personally invited to fill the final spot in the August 2026 session of The Forge. Just complete the registration below and pay your tuition to secure your place — no interview or approval needed.</p>
 
             <div class="process-steps">
                 <div class="process-step">
                     <span class="step-number">1</span>
-                    <h3>Submit Application</h3>
-                    <p>Form & $250 deposit</p>
+                    <h3>Register</h3>
+                    <p>Complete the form</p>
                 </div>
                 <div class="process-step">
                     <span class="step-number">2</span>
-                    <h3>Interview</h3>
-                    <p>20-30 min call</p>
+                    <h3>Pay Tuition</h3>
+                    <p>Full tuition, one payment</p>
                 </div>
                 <div class="process-step">
                     <span class="step-number">3</span>
-                    <h3>Decision</h3>
-                    <p>Within 48 hours</p>
-                </div>
-                <div class="process-step">
-                    <span class="step-number">4</span>
-                    <h3>Enroll</h3>
-                    <p>Pay balance</p>
+                    <h3>Enrolled</h3>
+                    <p>You're in — see you in August</p>
                 </div>
             </div>
         </section>
@@ -777,13 +772,13 @@
                     </div>
 
                     <div style="display:block; width:100%; max-width:100%; background:#1e3a2f; color:#e8e4e0; padding:16px; margin:0 0 20px 0; border-radius:10px; border-left:3px solid #b87333; box-sizing:border-box;">
-                        <h3 style="color:#fff; font-size:14px; margin:0 0 4px 0;">Application Deposit</h3>
-                        <span style="font-family:'Bebas Neue',sans-serif; font-size:32px; color:#b87333; display:block; margin:8px 0;">$250</span>
-                        <p style="font-size:13px; margin:0 0 12px 0;">Required to complete your application.</p>
+                        <h3 style="color:#fff; font-size:14px; margin:0 0 4px 0;">Tuition</h3>
+                        <span style="font-family:'Bebas Neue',sans-serif; font-size:32px; color:#b87333; display:block; margin:8px 0;">Paid in Full</span>
+                        <p style="font-size:13px; margin:0 0 12px 0;">A single tuition payment reserves your spot. The exact amount is shown on the secure payment page.</p>
                         <ul style="list-style:none; padding:0; margin:0;">
-                            <li style="font-size:12px; padding:4px 0; padding-left:20px; position:relative;"><span style="position:absolute; left:0; color:#b87333;">✓</span> <strong>Fully refundable</strong> if not admitted</li>
-                            <li style="font-size:12px; padding:4px 0; padding-left:20px; position:relative;"><span style="position:absolute; left:0; color:#b87333;">✓</span> Applied toward tuition if accepted</li>
-                            <li style="font-size:12px; padding:4px 0; padding-left:20px; position:relative;"><span style="position:absolute; left:0; color:#b87333;">✓</span> Non-refundable after admission</li>
+                            <li style="font-size:12px; padding:4px 0; padding-left:20px; position:relative;"><span style="position:absolute; left:0; color:#b87333;">✓</span> One payment — no balance due later</li>
+                            <li style="font-size:12px; padding:4px 0; padding-left:20px; position:relative;"><span style="position:absolute; left:0; color:#b87333;">✓</span> Secures your place in the August 2026 session</li>
+                            <li style="font-size:12px; padding:4px 0; padding-left:20px; position:relative;"><span style="position:absolute; left:0; color:#b87333;">✓</span> <strong>Non-refundable</strong></li>
                         </ul>
                     </div>
 
@@ -791,13 +786,8 @@
                         <h2 class="form-section-title">Acknowledgments</h2>
 
                         <div style="display:block; width:100%; background:#f8f8f8; padding:12px; border-radius:8px; margin-bottom:12px; box-sizing:border-box;">
-                            <input type="checkbox" id="ack_interview" name="ack_interview" required style="float:left; width:20px; height:20px; margin-right:10px; margin-top:2px;">
-                            <label for="ack_interview" style="display:block; overflow:hidden; font-size:12px; line-height:1.5; cursor:pointer;">I understand all applicants must complete an interview before admission. <span style="color:#8b4513;">*</span></label>
-                        </div>
-
-                        <div style="display:block; width:100%; background:#f8f8f8; padding:12px; border-radius:8px; margin-bottom:12px; box-sizing:border-box;">
                             <input type="checkbox" id="ack_deposit" name="ack_deposit" required style="float:left; width:20px; height:20px; margin-right:10px; margin-top:2px;">
-                            <label for="ack_deposit" style="display:block; overflow:hidden; font-size:12px; line-height:1.5; cursor:pointer;">I understand the deposit is refundable if not admitted, non-refundable upon acceptance. <span style="color:#8b4513;">*</span></label>
+                            <label for="ack_deposit" style="display:block; overflow:hidden; font-size:12px; line-height:1.5; cursor:pointer;">I understand my tuition payment is non-refundable. <span style="color:#8b4513;">*</span></label>
                         </div>
 
                         <div style="display:block; width:100%; background:#f8f8f8; padding:12px; border-radius:8px; margin-bottom:12px; box-sizing:border-box;">
@@ -912,7 +902,6 @@
 
             const formData = new FormData(this);
             const data = Object.fromEntries(formData.entries());
-            data.ack_interview = document.getElementById('ack_interview').checked;
             data.ack_deposit = document.getElementById('ack_deposit').checked;
             data.ack_accurate = document.getElementById('ack_accurate').checked;
             data.submitted_at = new Date().toISOString();
