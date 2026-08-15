@@ -1,2 +1,3 @@
 User-agent: *
 Disallow: /cadre-roster-
+Disallow: /camp-2026-photos-
