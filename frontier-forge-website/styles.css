@@ -246,7 +246,7 @@ strong {
     align-items: center;
     text-align: center;
     position: relative;
-    background: url('https://images.unsplash.com/photo-1599521328728-ccff739cc6f4?w=1920&q=80') center/cover no-repeat;
+    background: url('assets/camp-2026/full/39.webp') center 55%/cover no-repeat;
     padding: var(--spacing-2xl) var(--spacing-md);
 }
 
