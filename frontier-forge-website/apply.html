@@ -806,7 +806,7 @@
                     </div>
 
                     <button type="submit" class="submit-btn">Submit & Pay $250</button>
-                    <p class="form-footer">You'll be directed to schedule your interview.</p>
+                    <p class="form-footer">Next you'll pay the $250 deposit on our secure Stripe page, then schedule your interview.</p>
                 </form>
 
                 <div id="confirmation">
@@ -822,14 +822,19 @@
                         </div>
                         <div class="step-card active">
                             <div class="step-icon">2</div>
-                            <h3>Interview</h3>
+                            <h3>Deposit</h3>
                             <p>Redirecting...</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-icon">3</div>
+                            <h3>Interview</h3>
+                            <p>Schedule after deposit</p>
                         </div>
                     </div>
 
                     <div class="redirect-notice">
-                        <p>Redirecting to schedule interview...</p>
-                        <a href="https://calendly.com/holtocw/forge-30min-interview" target="_blank" class="calendly-btn">Schedule Interview</a>
+                        <p>Taking you to the secure $250 deposit page. After you pay, you'll be taken to schedule your interview.</p>
+                        <a href="https://buy.stripe.com/bJeaEXdTAffM9NT4eNfYY0c" class="calendly-btn">Pay $250 Deposit</a>
                     </div>
                 </div>
             </div>
@@ -927,7 +932,7 @@
                     document.getElementById('confirmation').classList.add('show');
                     document.querySelector('.back-link').style.display = 'none';
                     setTimeout(() => {
-                        window.location.href = 'https://calendly.com/holtocw/forge-30min-interview';
+                        window.location.href = 'https://buy.stripe.com/bJeaEXdTAffM9NT4eNfYY0c';
                     }, 3000);
                 } else {
                     throw new Error('Failed');
