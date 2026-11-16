@@ -112,19 +112,22 @@ export default async function handler(req, res) {
     const sheets = google.sheets({ version: 'v4', auth });
 
     const row = [[
-      data.timestamp || new Date().toISOString(),
-      data.parent_name, data.relationship, data.parent_email, data.parent_phone,
-      data.address, data.city, data.state, data.zip,
-      data.student_name, data.student_dob, data.student_age, data.student_email,
-      data.allergies, data.medications, data.health_conditions, data.injuries, data.dietary,
-      data.interest_reason, data.referral_source, data.additional_info,
-      data.emergency_name, data.emergency_relationship, data.emergency_phone,
-      data.deposit_status || 'Pending'
+      // Order must match the 'Forge Applicants' header row (A:Z).
+      data.timestamp || new Date().toISOString(),          // A Timestamp
+      data.student_name,                                   // B Applicant Name
+      data.parent_name, data.relationship, data.parent_email, data.parent_phone, // C-F
+      data.address, data.city, data.state, data.zip,       // G-J
+      data.student_dob, data.student_age, data.student_email, // K-M
+      data.allergies, data.medications, data.health_conditions, data.injuries, data.dietary, // N-R
+      data.interest_reason, data.referral_source, data.additional_info, // S-U
+      data.emergency_name, data.emergency_relationship, data.emergency_phone, // V-X
+      'Pending',                                           // Y Initial Interview Date Completed
+      ''                                                   // Z Deposit Status (marked by hand)
     ]];
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: SHEET_ID,
-      range: "'Forge Applicants'!A:Y",
+      range: "'Forge Applicants'!A:Z",
       valueInputOption: 'RAW',
       requestBody: { values: row }
     });
