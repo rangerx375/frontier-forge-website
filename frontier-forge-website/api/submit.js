@@ -71,7 +71,7 @@ async function notifyStaff(d) {
     to: NOTIFY_TO,
     cc: NOTIFY_CC,
     replyTo,
-    subject: `New Forge applicant: ${d.student_name || 'Unknown'} (age ${d.student_age || '?'}) — please schedule interview`,
+    subject: `New Forge applicant: ${d.student_name || 'Unknown'} (age ${d.student_age || '?'}), please schedule interview`,
     text: applicantEmailText(d),
   });
 }
