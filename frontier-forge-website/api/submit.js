@@ -20,10 +20,11 @@ const credentials = {
 };
 
 
-function applicantEmailText(d) {
+function applicantEmailText(d, count) {
   const v = (x) => (x === undefined || x === null || String(x).trim() === '') ? '—' : String(x).trim();
   return [
     `New Frontier Forge 2027 application. Please reach out to schedule the interview.`,
+    ...(count ? [`This is application #${count} for the 2027 session.`] : []),
     `(Reply to this email to write straight to the parent.)`,
     ``,
     `STUDENT`,
@@ -58,7 +59,18 @@ function applicantEmailText(d) {
   ].join('\n');
 }
 
-async function notifyStaff(d) {
+// 2027 registration opened 2026-11-11; count every row stamped on or after that.
+const SEASON_START = '2026-11-11';
+
+async function countSeasonApplications(sheets) {
+  const r = await sheets.spreadsheets.values.get({
+    spreadsheetId: SHEET_ID,
+    range: "'Forge Applicants'!A:A"
+  });
+  return (r.data.values || []).filter(([ts]) => /^\d{4}-\d{2}-\d{2}T/.test(ts || '') && ts >= SEASON_START).length;
+}
+
+async function notifyStaff(d, count) {
   const password = process.env.SMTP_PASSWORD;
   if (!password) { console.error('SMTP_PASSWORD not set; applicant alert skipped'); return; }
   const transporter = nodemailer.createTransport({
@@ -71,8 +83,8 @@ async function notifyStaff(d) {
     to: NOTIFY_TO,
     cc: NOTIFY_CC,
     replyTo,
-    subject: `New Forge applicant: ${d.student_name || 'Unknown'} (age ${d.student_age || '?'}), please schedule interview`,
-    text: applicantEmailText(d),
+    subject: `New Forge applicant${count ? ` #${count}` : ''}: ${d.student_name || 'Unknown'} (age ${d.student_age || '?'}), please schedule interview`,
+    text: applicantEmailText(d, count),
   });
 }
 
@@ -118,7 +130,9 @@ export default async function handler(req, res) {
     });
 
     try {
-      await notifyStaff(data);
+      let count = null;
+      try { count = await countSeasonApplications(sheets); } catch (e) { console.error('Count failed:', e.message); }
+      await notifyStaff(data, count);
     } catch (mailErr) {
       // Never fail the application because the alert email failed; the row is already saved.
       console.error('Applicant alert email failed:', mailErr.message);
