@@ -1,4 +1,10 @@
 const { google } = require('googleapis');
+const nodemailer = require('nodemailer');
+
+// New-application alert: Chris Anderson schedules interviews by hand (Calendly dropped 2026-11-16).
+const NOTIFY_TO = ['canderson141@gmail.com'];
+const NOTIFY_CC = ['chuck@holtonnews.com'];
+const SMTP_USER = 'chuck@holtonnews.com';
 
 const SHEET_ID = '1qbiAP58SfhXfflutiScmq9OLFiJ6mBeQ5JHBp-GsszQ';
 
@@ -12,6 +18,63 @@ const credentials = {
   auth_uri: "https://accounts.google.com/o/oauth2/auth",
   token_uri: "https://oauth2.googleapis.com/token"
 };
+
+
+function applicantEmailText(d) {
+  const v = (x) => (x === undefined || x === null || String(x).trim() === '') ? '—' : String(x).trim();
+  return [
+    `New Frontier Forge 2027 application. Please reach out to schedule the interview.`,
+    `(Reply to this email to write straight to the parent.)`,
+    ``,
+    `STUDENT`,
+    `Name: ${v(d.student_name)}`,
+    `Age: ${v(d.student_age)}   DOB: ${v(d.student_dob)}`,
+    `Student email: ${v(d.student_email)}`,
+    ``,
+    `PARENT / GUARDIAN`,
+    `Name: ${v(d.parent_name)} (${v(d.relationship)})`,
+    `Phone: ${v(d.parent_phone)}`,
+    `Email: ${v(d.parent_email)}`,
+    `Address: ${v(d.address)}, ${v(d.city)}, ${v(d.state)} ${v(d.zip)}`,
+    ``,
+    `WHY HE WANTS TO ATTEND`,
+    v(d.interest_reason),
+    ``,
+    `How they heard about us: ${v(d.referral_source)}`,
+    `Anything else: ${v(d.additional_info)}`,
+    ``,
+    `HEALTH`,
+    `Allergies: ${v(d.allergies)}`,
+    `Medications: ${v(d.medications)}`,
+    `Health conditions: ${v(d.health_conditions)}`,
+    `Injuries: ${v(d.injuries)}`,
+    `Dietary: ${v(d.dietary)}`,
+    ``,
+    `EMERGENCY CONTACT`,
+    `${v(d.emergency_name)} (${v(d.emergency_relationship)}) ${v(d.emergency_phone)}`,
+    ``,
+    `Note: this was sent when the form was submitted. The family is sent on to pay the $250 deposit next. Check Stripe or with Chuck to confirm the deposit came through.`,
+    `Submitted: ${v(d.submitted_at)}`,
+  ].join('\n');
+}
+
+async function notifyStaff(d) {
+  const password = process.env.SMTP_PASSWORD;
+  if (!password) { console.error('SMTP_PASSWORD not set; applicant alert skipped'); return; }
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com', port: 465, secure: true,
+    auth: { user: SMTP_USER, pass: password }
+  });
+  const replyTo = d.parent_email && /@/.test(d.parent_email) ? d.parent_email : undefined;
+  await transporter.sendMail({
+    from: `"Frontier Forge Applications" <${SMTP_USER}>`,
+    to: NOTIFY_TO,
+    cc: NOTIFY_CC,
+    replyTo,
+    subject: `New Forge applicant: ${d.student_name || 'Unknown'} (age ${d.student_age || '?'}) — please schedule interview`,
+    text: applicantEmailText(d),
+  });
+}
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -53,6 +116,13 @@ export default async function handler(req, res) {
       valueInputOption: 'RAW',
       requestBody: { values: row }
     });
+
+    try {
+      await notifyStaff(data);
+    } catch (mailErr) {
+      // Never fail the application because the alert email failed; the row is already saved.
+      console.error('Applicant alert email failed:', mailErr.message);
+    }
 
     res.status(200).json({ status: 'ok' });
   } catch (error) {
